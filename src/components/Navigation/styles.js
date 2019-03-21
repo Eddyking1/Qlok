@@ -53,12 +53,15 @@ export const Overlay = styled.aside`
     text-align: center;
     position: relative;
     img {
-      width: 50%;
-      padding: 0 0 20px;
+      width: 40%;
+      padding: 0 0 100px;
     }
     li {
       width: 80%;
       min-width: 200px;
+      background: var(--background-color);
+      border-radius: 10px;
+      margin: 4px 0;
 
       a {
         display: block;
