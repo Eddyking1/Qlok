@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
     --menu-color: #F3EAD6;
     --text-color: #203449;
     --main-button-color: #CF2E2E;
+    --background-color: #FCFAF5;
 
 
     --search-field: hsl(220, 7%, 17%);
@@ -25,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    background: #FCFAF5;
+    background: var(--background-color);
     color: var(--text-color);
     overflow-x:hidden;
   }

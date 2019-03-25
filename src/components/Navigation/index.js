@@ -34,7 +34,7 @@ const NavigationAuth = () => (
     <Link to={ROUTES.ADMIN}>Admin</Link>
    </li>
    <li>
-     <Link to={ROUTES.ACCOUNT}>My Account</Link>
+     <Link to={ROUTES.ACCOUNT}>Account</Link>
    </li>
    <SignOutButton />
  </ul>

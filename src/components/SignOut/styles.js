@@ -6,6 +6,4 @@ export const SignOut = styled.button`
  padding: 20px 0;
  transition: .4s;
  cursor: pointer;
-
-
 `;
