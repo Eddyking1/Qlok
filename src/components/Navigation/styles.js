@@ -1,5 +1,9 @@
-import styled from 'styled-components';
-import {KeyFrameSidebar, KeyFrameSidebarIn, KeyFrameSidebarFade} from '../../styles/Keyframes';
+import styled from "styled-components";
+import {
+  KeyFrameSidebar,
+  KeyFrameSidebarIn,
+  KeyFrameSidebarFade
+} from "../../styles/Keyframes";
 export const Navbar = styled.div`
   height: 60px;
   border: none;
@@ -36,10 +40,10 @@ export const Overlay = styled.aside`
     width: 100%;
   }
   ${props => !props.open} {
-    animation: ${ KeyFrameSidebar } .6s forwards;
+    animation: ${KeyFrameSidebar} 0.6s forwards;
   }
   ${props => props.open} {
-    animation: ${ KeyFrameSidebarIn } .6s forwards;
+    animation: ${KeyFrameSidebarIn} 0.6s forwards;
     pointer-events: none;
   }
   ul {
@@ -69,7 +73,7 @@ export const Overlay = styled.aside`
         font-size: 2.5em;
         color: var(--text-color);
         margin: 10px 0;
-        transition: .4s;
+        transition: 0.4s;
       }
     }
   }
@@ -78,11 +82,11 @@ export const NavigationExit = styled.button`
   position: absolute;
   top: 15px;
   right: 15px;
-  transition: .4s;
+  transition: 0.4s;
   margin: 0 0;
   padding: 0 0;
   :hover {
-    transition: .4s;
+    transition: 0.4s;
     transform: scale(1.1);
   }
 `;
@@ -91,8 +95,8 @@ export const Sidebar = styled.div`
   min-height: 100vh;
   top: 0;
   position: absolute;
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0, 0, 0, 0.2);
   ${props => props.open === true} {
-    animation: ${KeyFrameSidebarFade} .6s forwards;
+    animation: ${KeyFrameSidebarFade} 0.6s forwards;
   }
 `;

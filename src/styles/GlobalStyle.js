@@ -45,6 +45,18 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
   }
+
+  .chartHeadline{
+    font-size:3em;
+    margin: 30px 60px;
+  }
+`;
+
+const Header = styled.div`
+  height: 60px;
+  width: 100%;
+  background: #ede0c2;
+  border-bottom: 1px solid #f5eede;
 `;
 
 const FormStyle = styled.div`
@@ -58,9 +70,9 @@ const FormStyle = styled.div`
 
   form {
     display: flex;
-    justify-content:center;
-    align-items:center;
-    align-content:center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
     flex-direction: column;
   }
 
@@ -77,7 +89,6 @@ const FormStyle = styled.div`
     margin: 0.5em 0;
     outline: none;
     transition: transform 0.3s ease-in-out;
-
   }
 
   input:-webkit-autofill,
@@ -89,14 +100,13 @@ const FormStyle = styled.div`
   select:-webkit-autofill,
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
-  border: 1px solid var(--text-color);
-  -webkit-text-fill-color: var(--text-color);
-  -webkit-box-shadow: 0 0 0px 1000px var(--menu-color) inset;
-  transition: background-color 5000s ease-in-out 0s;
+    border: 1px solid var(--text-color);
+    -webkit-text-fill-color: var(--text-color);
+    -webkit-box-shadow: 0 0 0px 1000px var(--menu-color) inset;
+    transition: background-color 5000s ease-in-out 0s;
 
-  transition: transform 0.3s ease-in-out;
-
-}
+    transition: transform 0.3s ease-in-out;
+  }
   input::placeholder {
     opacity: 1; /* Firefox */
   }
@@ -137,4 +147,4 @@ const FormStyle = styled.div`
   }
 `;
 
-export { GlobalStyle, FormStyle };
+export { GlobalStyle, FormStyle, Header };

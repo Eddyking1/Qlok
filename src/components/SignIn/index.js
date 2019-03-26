@@ -1,30 +1,27 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
-import {FormStyle} from '../../styles/GlobalStyle';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import { FormStyle } from "../../styles/GlobalStyle";
 
-
-import { SignUpLink } from '../SignUp';
-import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
-import { PasswordForgetLink } from '../PasswordForget';
-import {LoginIcon} from '../../styles/Icons';
-
+import { SignUpLink } from "../SignUp";
+import { withFirebase } from "../Firebase";
+import * as ROUTES from "../../constants/routes";
+import { PasswordForgetLink } from "../PasswordForget";
+import { LoginIcon } from "../../styles/Icons";
 
 const SignInPage = () => (
   <div>
     <SignInForm />
-
   </div>
- );
+);
 
- const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
- };
+const INITIAL_STATE = {
+  email: "",
+  password: "",
+  error: null
+};
 
- class SignInFormBase extends Component {
+class SignInFormBase extends Component {
   constructor(props) {
     super(props);
 
@@ -54,46 +51,44 @@ const SignInPage = () => (
   render() {
     const { email, password, error } = this.state;
 
-    const isInvalid = password === '' || email === '';
+    const isInvalid = password === "" || email === "";
 
     return (
       <FormStyle>
-      <form onSubmit={this.onSubmit}>
-      <LoginIcon/>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <PasswordForgetLink />
-        <SignUpLink />
-        <button disabled={isInvalid} type="submit">
-        Sign in
-        </button>
+        <form onSubmit={this.onSubmit}>
+          <LoginIcon />
+          <input
+            name="email"
+            value={email}
+            onChange={this.onChange}
+            type="text"
+            placeholder="Email Address"
+          />
+          <input
+            name="password"
+            value={password}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Password"
+          />
+          <PasswordForgetLink />
+          <SignUpLink />
+          <button disabled={isInvalid} type="submit">
+            Sign in
+          </button>
 
-        {error && <p>{error.message}</p>}
-
-      </form>
-
+          {error && <p>{error.message}</p>}
+        </form>
       </FormStyle>
     );
   }
- }
+}
 
- const SignInForm = compose(
+const SignInForm = compose(
   withRouter,
-  withFirebase,
- )(SignInFormBase);
+  withFirebase
+)(SignInFormBase);
 
- export default SignInPage;
+export default SignInPage;
 
- export { SignInForm };
+export { SignInForm };
