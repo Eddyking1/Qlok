@@ -55,6 +55,7 @@ const FormStyle = styled.div`
   width: 100%;
   min-height: calc(100vh - 60px);
   margin: 0;
+  flex-direction: column;
 
   form {
     display: flex;
@@ -62,6 +63,7 @@ const FormStyle = styled.div`
     align-items:center;
     align-content:center;
     flex-direction: column;
+    width: ${props => props.fullWidth ? "80%" : ""};
   }
 
   input {
@@ -77,6 +79,7 @@ const FormStyle = styled.div`
     margin: 0.5em 0;
     outline: none;
     transition: transform 0.3s ease-in-out;
+    width: 100%;
 
   }
 
