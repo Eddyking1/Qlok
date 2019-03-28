@@ -4,7 +4,7 @@ import {
   withAuthorization,
 } from '../Session';
 import { withFirebase } from '../Firebase';
-import {FormStyle} from '../../styles/GlobalStyle';
+import {FormStyle, Success, Loading} from '../../styles/GlobalStyle';
 
 class CreateSurvey extends Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class CreateSurvey extends Component {
 
     this.state = {
       loading: false,
+      success: false,
       sliderOne: "",
       sliderTwo: "",
       sliderThree: "",
@@ -23,7 +24,9 @@ class CreateSurvey extends Component {
 
   componentDidMount() {
     this.getCurrentEducation();
-    this.getEductationUsersFromDB();
+
+    // this.getEductationUsersFromDB();
+    // this.getCurrentWeek();
   }
 
   componentWillUnmount() {
@@ -43,12 +46,14 @@ class CreateSurvey extends Component {
   // }
 
   getCurrentEducation = () => {
+    this.setState({loading: true});
     this.props.firebase.user(this.props.authUser.uid).once("value", snapshot => {
       const user = snapshot.val();
       if(user.education) {
         this.setState({
           currentEducation: user.education,
         })
+        this.setState({loading: false});
       }
     })
   }
@@ -71,17 +76,13 @@ class CreateSurvey extends Component {
   //   })
   // }
 
-  renderEducations = () => {
-    var options = [];
-    this.state.educations.forEach(education => {
-      options.push(<option key={education.uid} value={education.uid}>{education.value}</option>)
-    })
-    return options;
-  }
 
   onSubmit = (event) => {
-    const { sliderOne, sliderTwo, sliderThree, questionOne, questionTwo, currentEdcStudents, currentEducation} = this.state;
+    this.setState({
+      success: true,
+    });
 
+    const { sliderOne, sliderTwo, sliderThree, questionOne, questionTwo, currentEdcStudents, currentEducation} = this.state;
     this.props.firebase.surveys().push({
       sliderOne: sliderOne,
       sliderTwo: sliderTwo,
@@ -100,6 +101,9 @@ class CreateSurvey extends Component {
 
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      success: false
+    });
   }
 
   render() {
@@ -109,14 +113,10 @@ class CreateSurvey extends Component {
 
     return (
       <div>
+        {this.state.success ? <Success>Utvärderingen har skickats!</Success> : null }
         { !this.state.loading ?
           <FormStyle fullWidth>
             <h1>Skapa nytt formulär</h1>
-
-            <select value={this.state.selectedValue} onChange={this.handleChangeSelect}>
-              <option>Vecka</option>
-              {this.renderWeeks()}
-            </select>
 
             <form onSubmit={this.onSubmit}>
               <input
@@ -124,42 +124,42 @@ class CreateSurvey extends Component {
                 value={sliderOne}
                 onChange={this.onChange}
                 type="text"
-                placeholder="First slider"
+                placeholder="Fråga till diagram(*)"
               />
               <input
                 name="sliderTwo"
                 value={sliderTwo}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Second slider"
+                placeholder="Fråga till diagram(*)"
               />
               <input
                 name="sliderThree"
                 value={sliderThree}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Third slider"
+                placeholder="Fråga till diagram(*)"
               />
               <input
                 name="questionOne"
                 value={questionOne}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Optional question 1"
+                placeholder="Skriv en fråga till studenterna"
               />
               <input
                 name="questionTwo"
                 value={questionTwo}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Optional question 2"
+                placeholder="Skriva en fråga till studenterna"
               />
               <button disabled={isInvalid} type="submit">
                 Skicka ut formulär
               </button>
             </form>
           </FormStyle>
-          : <h1>Website is loading...</h1> }
+          : <Loading>Website is loading..</Loading> }
         </div>
       );
     }

@@ -22,15 +22,16 @@ class HomePage extends Component {
   loadSurveysFromDB = () => {
     this.props.firebase.surveys().on('value', snapshot => {
       const surveysObject = snapshot.val();
+      if(surveysObject) {
+        const surveyList = Object.keys(surveysObject).map(key => ({
+          ...surveysObject[key],
+          uid: key,
+        }));
 
-      const surveyList = Object.keys(surveysObject).map(key => ({
-        ...surveysObject[key],
-        uid: key,
-      }));
-
-      this.setState({
-        surveys: surveyList,
-      });
+        this.setState({
+          surveys: surveyList,
+        });
+      }
       console.log(this.state);
     });
   }

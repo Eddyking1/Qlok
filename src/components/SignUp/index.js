@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import { FormStyle } from '../../styles/GlobalStyle';
+import {FormStyle, Success} from '../../styles/GlobalStyle';
 import {SignUpIcon} from '../../styles/Icons';
 
 const SignUpPage = () => (
@@ -21,6 +21,7 @@ const INITIAL_STATE = {
   educations: null,
   education: '',
   error: null,
+  success: false,
 };
 
 class SignUpFormBase extends Component {
@@ -34,6 +35,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
+    this.setState({success: true});
     const {username, email, passwordOne, education } = this.state;
 
     this.props.firebase
