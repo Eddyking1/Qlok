@@ -7,13 +7,6 @@ import styled from "styled-components";
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
 
-const PwForgetButton = styled.div`
-  button {
-    padding: 1.3em 1.3em;
-    font-size: 1.5em;
-  }
-`;
-
 const PasswordForgetPage = () => (
   <div>
     <PasswordForgetForm />
@@ -57,7 +50,6 @@ class PasswordForgetFormBase extends Component {
     const isInvalid = email === "";
 
     return (
-      <FormStyle>
         <form onSubmit={this.onSubmit}>
           <h1>Forgot password?</h1>
           <h2>This sends you an e-mail verification</h2>
@@ -68,14 +60,11 @@ class PasswordForgetFormBase extends Component {
             type="text"
             placeholder="Email Address"
           />
-          <PwForgetButton>
             <button disabled={isInvalid} type="submit">
               Reset My Password
             </button>
-          </PwForgetButton>
           {error && <p>{error.message}</p>}
         </form>
-      </FormStyle>
     );
   }
 }

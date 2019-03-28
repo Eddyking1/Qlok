@@ -10,28 +10,40 @@ class HomePage extends Component {
     super(props);
 
     this.state = {
-      users: null,
+      surveys: null,
       loading: false,
     };
   }
 
-  // componentDidMount() {
-  //   console.log(this.props.authUser, "home");
-  //   this.setState({loading: true});
-  //
-  //   this.props.firebase.users().on("value", snapshot => {
-  //     this.setState({
-  //       users: snapshot.val(),
-  //       loading: false,
-  //     });
-  //   });
-  // }
+  componentDidMount() {
+    this.loadSurveysFromDB();
+  }
 
-  // componentWillUnmount() {
-  //   this.props.firebase.users().off();
-  // }
+  loadSurveysFromDB = () => {
+    this.props.firebase.surveys().on('value', snapshot => {
+      const surveysObject = snapshot.val();
+      if(surveysObject) {
+        const surveyList = Object.keys(surveysObject).map(key => ({
+          ...surveysObject[key],
+          uid: key,
+        }));
+
+        this.setState({
+          surveys: surveyList,
+        });
+      }
+      console.log(this.state);
+    });
+  }
+
+
+
+  componentWillUnmount() {
+    this.props.firebase.surveys().off();
+  }
 
   render() {
+
     return (
       <div>
         { !this.state.loading ? <div>

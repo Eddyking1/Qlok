@@ -15,6 +15,7 @@ export const Navbar = styled.div`
   align-items: center;
   font-size: 1rem;
   color: var(--text-color);
+  background-color: var(--menu-color);
   z-index: 10000;
   button {
     background: none;

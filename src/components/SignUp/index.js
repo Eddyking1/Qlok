@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import { FormStyle } from '../../styles/GlobalStyle';
+import {FormStyle, Success} from '../../styles/GlobalStyle';
 import {SignUpIcon} from '../../styles/Icons';
 
 const SignUpPage = () => (
@@ -18,7 +18,10 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  educations: null,
+  education: '',
   error: null,
+  success: false,
 };
 
 class SignUpFormBase extends Component {
@@ -27,8 +30,13 @@ class SignUpFormBase extends Component {
     this.state = {...INITIAL_STATE};
   }
 
+  componentDidMount() {
+    this.getEducationsFromDB();
+  }
+
   onSubmit = event => {
-    const {username, email, passwordOne, position, online } = this.state;
+    this.setState({success: true});
+    const {username, email, passwordOne, education } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -38,6 +46,7 @@ class SignUpFormBase extends Component {
           .set({
             username,
             email,
+            education,
           });
       })
       .then(() => {
@@ -51,9 +60,34 @@ class SignUpFormBase extends Component {
     event.preventDefault();
   };
 
+  getEducationsFromDB = () =>  {
+    this.props.firebase.educations().once("value", snapshot => {
+      const educationsObject = snapshot.val();
+      const educationList = Object.keys(educationsObject).map(key => ({
+        value: educationsObject[key],
+        uid: key,
+      }));
+      this.setState({
+        educations: educationList,
+      })
+    })
+  }
+
+  renderEducations = () => {
+    var options = [];
+    this.state.educations.forEach(education => {
+      options.push(<option key={education.uid} value={education.uid}>{education.value}</option>)
+    })
+    return options;
+  }
+
   onChange = event => {
     this.setState({[event.target.name]: event.target.value});
   };
+
+  handleChangeSelect = event => {
+    this.setState({education: event.target.value});
+  }
 
   render() {
     const {
@@ -61,6 +95,8 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
+      education,
+      educations,
       error,
     } = this.state;
 
@@ -68,12 +104,18 @@ class SignUpFormBase extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      username === '';
+      username === '' || education === '';
 
     return(
       <FormStyle>
       <form onSubmit={this.onSubmit}>
       <SignUpIcon/>
+      {educations ?
+        <select value={this.state.education} onChange={this.handleChangeSelect}>
+          <option>Välj utbildning</option>
+          {this.renderEducations()}
+        </select>
+      : null}
 
         <input name="username"
           value={username}

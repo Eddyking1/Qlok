@@ -13,6 +13,9 @@ import CreateSurveyPage from "../CreateSurvey";
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
 
+import * as ROUTES from "../../constants/routes";
+import { withAuthentication } from "../Session";
+
 import {
   PieChart,
   Pie,
