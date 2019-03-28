@@ -52,13 +52,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Header = styled.div`
-  height: 60px;
-  width: 100%;
-  background: #ede0c2;
-  border-bottom: 1px solid #f5eede;
-`;
-
 const FormStyle = styled.div`
   display: flex;
   align-content: center;
@@ -147,4 +140,4 @@ const FormStyle = styled.div`
   }
 `;
 
-export { GlobalStyle, FormStyle, Header };
+export { GlobalStyle, FormStyle };
