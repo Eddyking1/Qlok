@@ -126,6 +126,11 @@ const FormStyle = styled.div`
     &:hover {
       transform: scale(1.04);
     }
+
+    &:disabled {
+      pointer-events: none;
+      background-color: grey;
+    }
   }
 
   h1 {

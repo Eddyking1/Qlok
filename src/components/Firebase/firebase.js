@@ -43,6 +43,12 @@ class Firebase {
 
   surveys = () => this.db.ref("surveys");
 
+  //*** Education API ***
+
+  education = uid => this.db.ref(`educations/${uid}`);
+
+  educations = () => this.db.ref("educations");
+
 }
 
 export default Firebase;
