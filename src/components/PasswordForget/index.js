@@ -57,7 +57,6 @@ class PasswordForgetFormBase extends Component {
     const isInvalid = email === "";
 
     return (
-      <FormStyle>
         <form onSubmit={this.onSubmit}>
           <h1>Forgot password?</h1>
           <h2>This sends you an e-mail verification</h2>
@@ -75,7 +74,6 @@ class PasswordForgetFormBase extends Component {
           </PwForgetButton>
           {error && <p>{error.message}</p>}
         </form>
-      </FormStyle>
     );
   }
 }

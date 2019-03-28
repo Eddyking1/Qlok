@@ -43,7 +43,6 @@ class PasswordChangeForm extends Component {
      passwordOne !== passwordTwo || passwordOne === '';
 
    return (
-     <FormStyle>
      <form onSubmit={this.onSubmit}>
      <h1> Change password here!</h1>
        <input
@@ -66,7 +65,6 @@ class PasswordChangeForm extends Component {
 
        {error && <p>{error.message}</p>}
      </form>
-     </FormStyle>
    );
  }
 }

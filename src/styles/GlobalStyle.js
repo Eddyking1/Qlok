@@ -1,15 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
+import {LoadingKeyframe, KeyFrameSucces} from './Keyframes';
 
 const GlobalStyle = createGlobalStyle`
-
   :root {
     --menu-color: #F3EAD6;
     --text-color: #203449;
     --main-button-color: #CF2E2E;
     --background-color: #FCFAF5;
-
-
     --search-field: hsl(220, 7%, 17%);
     --highlight-color: hsl(220, 7%, 27%);
     --toolbar-color: hsl(0, 0%, 98%);
@@ -20,7 +18,6 @@ const GlobalStyle = createGlobalStyle`
     --muted: hsl(240, 0%, 46%);
     --favourite: hsl(51, 95%, 58%);
   }
-
   body {
     width: 100vw;
     min-height: 100vh;
@@ -30,21 +27,48 @@ const GlobalStyle = createGlobalStyle`
     color: var(--text-color);
     overflow-x:hidden;
   }
-
   * {
     box-sizing: border-box;
     padding: 0rem;
     margin: 0rem;
     font-family: sans-serif;
   }
-
   li {
     list-style: none;
   }
-
   a {
     text-decoration: none;
   }
+`;
+const Success = styled.div `
+  width: 100%;
+  padding: 30px 0;
+  vertical-align: middle;
+  max-height: 100px;
+  background: #4bb543;
+  color: white;
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  animation: ${LoadingKeyframe} .4s ease-in;
+`;
+const Loading = styled.div `
+  width: 100%;
+  padding: 30px 0;
+  vertical-align: middle;
+  max-height: 100px;
+  background: var(--text-color);
+  color: #fcfaf5;
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  animation: ${LoadingKeyframe} .8s infinite ease-in-out;
 `;
 
 const FormStyle = styled.div`
@@ -54,9 +78,10 @@ const FormStyle = styled.div`
   align-items: center;
   width: 100%;
   min-height: calc(100vh - 60px);
+  width: 100%;
+
   margin: 0;
   flex-direction: column;
-
   form {
     display: flex;
     justify-content:center;
@@ -65,7 +90,22 @@ const FormStyle = styled.div`
     flex-direction: column;
     width: ${props => props.fullWidth ? "80%" : ""};
   }
+  select {
+    width:100%;
+    margin:0.5em;
+    padding:1em;
+    font-size:1.5em;
 
+    select select {
+      -moz-appearance:none; /* Firefox */
+      -webkit-appearance:none; /* Safari and Chrome */
+      color: var(--main-button-color);
+      background-color:var(--main-button-color);
+    }
+      select::-ms-expand {
+        display: none;
+       }
+  }
   input {
     font-size: 1.5em;
     border: none;
@@ -80,9 +120,7 @@ const FormStyle = styled.div`
     outline: none;
     transition: transform 0.3s ease-in-out;
     width: 100%;
-
   }
-
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -96,20 +134,16 @@ const FormStyle = styled.div`
   -webkit-text-fill-color: var(--text-color);
   -webkit-box-shadow: 0 0 0px 1000px var(--menu-color) inset;
   transition: background-color 5000s ease-in-out 0s;
-
   transition: transform 0.3s ease-in-out;
-
 }
   input::placeholder {
     opacity: 1; /* Firefox */
   }
-
   input:focus,
   textarea:focus,
   select:focus {
     outline-offset: 0px !important;
   }
-
   button {
     padding: 0.5em 1.5em;
     margin: 2em 0;
@@ -122,27 +156,22 @@ const FormStyle = styled.div`
     border-radius: 0.1em;
     transition: 0.3s;
     cursor: pointer;
-
     &:hover {
       transform: scale(1.04);
     }
-
     &:disabled {
       pointer-events: none;
       background-color: grey;
     }
   }
-
   h1 {
     height: 2em;
     text-align: center;
   }
-
   p {
     padding: 1em 0 0;
     text-align: center;
     font-size: 1.2em;
   }
 `;
-
-export { GlobalStyle, FormStyle };
+export { GlobalStyle, FormStyle, Success, Loading };
