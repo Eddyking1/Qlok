@@ -21,10 +21,6 @@ const AdminStyle = styled.div`
   align-items: center;
   flex-direction: column;
   text-align:center;
-  background-color:;
-  padding:40px;
-  border: 4px solid var(--text-color) ;
-  border-radius:20px;
   }
 
   h1 {
@@ -70,7 +66,7 @@ const AdminStyle = styled.div`
 `;
 
 const UserEmail = styled.div `
-padding: 10px 0 0 0;
+padding: 20px;
 font-size:1.5em;
 font-weight:bold;
 background-color:white;
