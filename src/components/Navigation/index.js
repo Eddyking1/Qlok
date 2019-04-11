@@ -28,13 +28,13 @@ const NavigationAuth = () => (
    <NavigationExit><NavCross/></NavigationExit>
    <img src={require("../../assets/qlok.png")}/>
    <li>
-     <Link to={ROUTES.HOME}>Home</Link>
+     <Link to={ROUTES.HOME}>Hem</Link>
    </li>
    <li>
     <Link to={ROUTES.ADMIN}>Admin</Link>
    </li>
    <li>
-     <Link to={ROUTES.ACCOUNT}>Account</Link>
+     <Link to={ROUTES.ACCOUNT}>Mitt konto</Link>
    </li>
    <SignOutButton />
  </ul>
@@ -45,7 +45,7 @@ const NavigationNonAuth = () => (
    <NavigationExit><NavCross/></NavigationExit>
    <img src={require("../../assets/qlok.png")}/>
    <li>
-     <Link to={ROUTES.SIGN_IN}> Sign In  </Link>
+     <Link to={ROUTES.SIGN_IN}> Logga in  </Link>
    </li>
  </ul>
 );

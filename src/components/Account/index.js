@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { AuthUserContext, withAuthorization } from '../Session';
-import { PasswordForgetForm } from '../PasswordForget';
 import PasswordChangeForm from '../PasswordChange';
 import styled from 'styled-components';
 
@@ -17,7 +16,7 @@ const AccountForm = styled.div`
     align-items: center;
     align-content: center;
     justify-content: center;
-    padding: 50px
+    padding: 50px;
     flex-direction: column;
 
     form {
@@ -62,7 +61,6 @@ const AccountPage = () => (
        <AccountEmail>Inloggad som: {authUser.email}</AccountEmail>
        <AccountForm>
          <PasswordChangeForm />
-         <PasswordForgetForm />
        </AccountForm>
      </div>
    )}

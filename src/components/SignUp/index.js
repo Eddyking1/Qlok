@@ -121,7 +121,7 @@ class SignUpFormBase extends Component {
           value={username}
           onChange={this.onChange}
           type="text"
-          placeholder="Username"
+          placeholder="Användarnamn"
         />
         <input name="email"
           value={email}
@@ -133,15 +133,15 @@ class SignUpFormBase extends Component {
           value={passwordOne}
           onChange={this.onChange}
           type="password"
-          placeholder="Password"
+          placeholder="Lösenord"
         />
         <input name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
           type="password"
-          placeholder="Confirm Password"
+          placeholder="Bekräfta lösenord"
         />
-        <button disabled={isInvalid} type="submit">Sign Up!</button>
+        <button disabled={isInvalid} type="submit">Skapa konto!</button>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -152,7 +152,7 @@ class SignUpFormBase extends Component {
 
 const SignUpLink = () => (
   <p>
-    Don´t have an account? <Link to={ROUTES.SIGN_UP}> <span> Sign Up! </span></Link>
+    Har du inget konto? <Link to={ROUTES.SIGN_UP}> <span> Skapa konto! </span></Link>
   </p>
 );
 

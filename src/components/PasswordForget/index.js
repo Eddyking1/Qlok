@@ -7,6 +7,14 @@ import styled from "styled-components";
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
 
+
+const PwForgetButton = styled.div`
+  button {
+    padding: 1.3em 1.3em;
+    font-size: 1.5em;
+  }
+`;
+
 const PasswordForgetPage = () => (
   <div>
     <PasswordForgetForm />
@@ -50,9 +58,10 @@ class PasswordForgetFormBase extends Component {
     const isInvalid = email === "";
 
     return (
+      <FormStyle>
         <form onSubmit={this.onSubmit}>
-          <h1>Forgot password?</h1>
-          <h2>This sends you an e-mail verification</h2>
+          <h1>Glömt ditt lösenord?</h1>
+          <h2>Skicka e-postbekräftelse</h2>
           <input
             name="email"
             value={this.state.email}
@@ -60,11 +69,15 @@ class PasswordForgetFormBase extends Component {
             type="text"
             placeholder="Email Address"
           />
+          <PwForgetButton>
             <button disabled={isInvalid} type="submit">
-              Reset My Password
+              Återställ lösenord
             </button>
+          </PwForgetButton>
           {error && <p>{error.message}</p>}
+          <SignUpLink />
         </form>
+      </FormStyle>
     );
   }
 }
@@ -72,8 +85,7 @@ class PasswordForgetFormBase extends Component {
 const PasswordForgetLink = () => (
   <p>
     <Link to={ROUTES.PASSWORD_FORGET}>
-      {" "}
-      <span> Forgot Password? </span>
+      <span> Glömt ditt lösenord? </span>
     </Link>
   </p>
 );
@@ -82,4 +94,7 @@ export default PasswordForgetPage;
 
 const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
 
-export { PasswordForgetForm, PasswordForgetLink };
+export { PasswordForgetForm, PasswordForgetLink }
+
+
+

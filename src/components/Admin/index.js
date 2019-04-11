@@ -92,7 +92,7 @@ class AdminPage extends Component {
           {!loading ? <UserEmail> {this.props.authUser.email} </UserEmail> : <div>Loading ...</div>}
 
           <button>
-           <Link to={ROUTES.CREATE_SURVEY}>Skapa en ny ankät</Link>
+           <Link to={ROUTES.CREATE_SURVEY}>Skapa en ny enkät</Link>
          </button>
         </div>
       </AdminStyle>

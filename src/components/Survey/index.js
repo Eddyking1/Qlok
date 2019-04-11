@@ -95,7 +95,7 @@ class Survey extends Component {
               </button>
             </form>
           </FormStyle>
-          : <h1>Website is loading...</h1> }
+          : <h1>Webbsidan laddar...</h1> }
         </div>
       );
     }
