@@ -92,7 +92,7 @@ class CreateSurvey extends Component {
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       createdBy: this.props.authUser.uid,
       education: currentEducation,
-      Answered: "",
+      answered: "",
       chartAnswers: "",
       altAnswers: "",
     });
