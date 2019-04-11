@@ -69,7 +69,7 @@ class Survey extends Component {
       questionTwo: questionTwo,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       createdBy: this.props.authUser.uid,
-      Answered: "",
+      answered: "",
       chartAnswers: "",
       altAnswers: "",
     });

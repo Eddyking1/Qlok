@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'recompose';
 import { withAuthorization, } from '../Session';
 import { withFirebase } from '../Firebase';
+import UserServey from '../UserServey';
 
 
 import {
@@ -331,7 +332,6 @@ class HomePage extends Component {
           surveys: surveyList,
         });
       }
-      console.log(this.state);
     });
   }
 
@@ -352,11 +352,11 @@ class HomePage extends Component {
   }
 
   render() {
-
+    const {loading, surveys} = this.state;
     return (
       <div>
-        { !this.state.loading ? <div>
-          <h1></h1> </div>: <h1>Website is loading...</h1> }
+        { !loading && surveys ? <div>
+          <UserServey surveys={surveys}></UserServey> </div>: <h1>Website is loading...</h1> }
           <div>
           <h1 className="chartHeadline">Klass FE18 - Kyh Stockholm</h1>
         </div>

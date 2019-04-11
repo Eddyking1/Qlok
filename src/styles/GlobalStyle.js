@@ -56,7 +56,7 @@ const Success = styled.div`
   font-weight: bold;
   text-align: center;
   position: absolute;
-  top: 0;
+  top: 50px;
   bottom: 0;
   animation: ${LoadingKeyframe} 0.4s ease-in;
 `;
@@ -71,7 +71,7 @@ const Loading = styled.div`
   font-weight: bold;
   text-align: center;
   position: absolute;
-  top: 0;
+  top: 50px;
   bottom: 0;
   animation: ${LoadingKeyframe} 0.8s infinite ease-in-out;
 `;
