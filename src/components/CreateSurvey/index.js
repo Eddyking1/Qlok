@@ -19,11 +19,13 @@ class CreateSurvey extends Component {
       questionOne: "",
       questionTwo: "",
       currentEducation: "",
+      placeholders:"",
     };
   }
 
   componentDidMount() {
     this.getCurrentEducation();
+    this.loadSurveysFromDB();
 
     // this.getEductationUsersFromDB();
     // this.getCurrentWeek();
@@ -106,6 +108,33 @@ class CreateSurvey extends Component {
     });
   }
 
+  loadSurveysFromDB = () => {
+    this.props.firebase.surveys().on('value', snapshot => {
+      const surveysObject = snapshot.val();
+      if(surveysObject) {
+        const surveyList = Object.keys(surveysObject).map(key => ({
+          ...surveysObject[key],
+          uid: key,
+        }));
+
+        this.setState({
+          surveys: surveyList,
+        });
+      }
+      console.log(this.state);
+      this.keepTypedValue();
+    });
+  }
+
+  keepTypedValue = (x) => {
+    const listLength = this.state.surveys.length;
+    const survei = this.state.surveys;
+    this.setState({
+      placeholders: [survei[listLength-1].sliderOne, survei[listLength-1].sliderTwo , survei[listLength-1].sliderThree , survei[listLength-1].questionOne, survei[listLength-1].questionTwo ],
+    })
+  
+  }
+
   render() {
     const { sliderOne, sliderTwo, sliderThree, questionOne, questionTwo } = this.state;
 
@@ -124,35 +153,35 @@ class CreateSurvey extends Component {
                 value={sliderOne}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Fråga till diagram(*)"
+                placeholder={this.state.placeholders[0]}
               />
               <input
                 name="sliderTwo"
                 value={sliderTwo}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Fråga till diagram(*)"
+                placeholder={this.state.placeholders[1]}
               />
               <input
                 name="sliderThree"
                 value={sliderThree}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Fråga till diagram(*)"
+                placeholder={this.state.placeholders[2]}
               />
               <input
                 name="questionOne"
                 value={questionOne}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Skriv en fråga till studenterna"
+                placeholder={this.state.placeholders[3]}
               />
               <input
                 name="questionTwo"
                 value={questionTwo}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Skriva en fråga till studenterna"
+                placeholder={this.state.placeholders[4]}
               />
               <button disabled={isInvalid} type="submit">
                 Skicka ut formulär
