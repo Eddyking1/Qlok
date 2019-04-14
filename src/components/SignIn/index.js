@@ -74,7 +74,7 @@ class SignInFormBase extends Component {
           <PasswordForgetLink />
           <SignUpLink />
           <button disabled={isInvalid} type="submit">
-           Logga in
+            Logga in
           </button>
 
           {error && <p>{error.message}</p>}
