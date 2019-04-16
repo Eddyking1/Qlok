@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { compose } from 'recompose';
-import {
-  withAuthorization,
-} from '../Session';
-import { withFirebase } from '../Firebase';
-import {FormStyle, Success, Loading} from '../../styles/GlobalStyle';
+import React, { Component } from "react";
+import { compose } from "recompose";
+import { withAuthorization } from "../Session";
+import { withFirebase } from "../Firebase";
+import { FormStyle, Success, Loading } from "../../styles/GlobalStyle";
 
 class CreateSurvey extends Component {
   constructor(props) {
@@ -19,72 +17,46 @@ class CreateSurvey extends Component {
       questionOne: "",
       questionTwo: "",
       currentEducation: "",
-      placeholders:"",
+      placeholders: ""
     };
   }
 
   componentDidMount() {
     this.getCurrentEducation();
     this.loadSurveysFromDB();
-
-    // this.getEductationUsersFromDB();
-    // this.getCurrentWeek();
   }
 
-  componentWillUnmount() {
-  }
-
-  // getLatestForm = () => {
-  //   this.props.firebase.surveys().once('value', snapshot => {
-  //     let surveys = snapshot.val();
-  //     this.setState({
-  //       sliderOne: survey.sliderOne,
-  //       sliderTwo: survey.sliderTwo,
-  //       sliderThree: survey.sliderThree,
-  //       questionOne: survey.questionOne,
-  //       questionTwo: survey.questionTwo,
-  //     })
-  //   })
-  // }
+  componentWillUnmount() {}
 
   getCurrentEducation = () => {
-    this.setState({loading: true});
-    this.props.firebase.user(this.props.authUser.uid).once("value", snapshot => {
-      const user = snapshot.val();
-      if(user.education) {
-        this.setState({
-          currentEducation: user.education,
-        })
-        this.setState({loading: false});
-      }
-    })
-  }
+    this.setState({ loading: true });
+    this.props.firebase
+      .user(this.props.authUser.uid)
+      .once("value", snapshot => {
+        const user = snapshot.val();
+        if (user.education) {
+          this.setState({
+            currentEducation: user.education
+          });
+          this.setState({ loading: false });
+        }
+      });
+  };
 
-  // getEductationUsersFromDB = () => {
-  //   this.props.firebase.users().on("value", snapshot => {
-  //     let usersObject = snapshot.val();
-  //
-  //     const users = Object.keys(usersObject).map(key => ({
-  //       ...usersObject[key],
-  //       uid: key,
-  //       completed: false,
-  //     }));
-  //
-  //
-  //     let currentEdcUsers = users.filter(user => user.education === this.state.currentEducation);
-  //     this.setState({
-  //       currentEdcStudents: currentEdcUsers,
-  //     })
-  //   })
-  // }
-
-
-  onSubmit = (event) => {
+  onSubmit = event => {
     this.setState({
-      success: true,
+      success: true
     });
 
-    const { sliderOne, sliderTwo, sliderThree, questionOne, questionTwo, currentEdcStudents, currentEducation} = this.state;
+    const {
+      sliderOne,
+      sliderTwo,
+      sliderThree,
+      questionOne,
+      questionTwo,
+      currentEdcStudents,
+      currentEducation
+    } = this.state;
     this.props.firebase.surveys().push({
       sliderOne: sliderOne,
       sliderTwo: sliderTwo,
@@ -94,56 +66,79 @@ class CreateSurvey extends Component {
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       createdBy: this.props.authUser.uid,
       education: currentEducation,
-      answered: "",
+      Answered: "",
       chartAnswers: "",
-      altAnswers: "",
+      altAnswers: ""
     });
     event.preventDefault();
-  }
+  };
 
-  onChange = (event) => {
+  onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
     this.setState({
       success: false
     });
-  }
+  };
 
   loadSurveysFromDB = () => {
-    this.props.firebase.surveys().on('value', snapshot => {
+    this.props.firebase.surveys().on("value", snapshot => {
       const surveysObject = snapshot.val();
-      if(surveysObject) {
+      if (surveysObject) {
         const surveyList = Object.keys(surveysObject).map(key => ({
           ...surveysObject[key],
-          uid: key,
+          uid: key
         }));
 
-        this.setState({
-          surveys: surveyList,
-        });
+        this.setState(
+          {
+            surveys: surveyList
+          },
+          () => {
+            this.keepTypedValue();
+          }
+        );
       }
       console.log(this.state);
-      this.keepTypedValue();
     });
-  }
+  };
 
-  keepTypedValue = (x) => {
+  keepTypedValue = () => {
     const listLength = this.state.surveys.length;
     const survei = this.state.surveys;
     this.setState({
-      placeholders: [survei[listLength-1].sliderOne, survei[listLength-1].sliderTwo , survei[listLength-1].sliderThree , survei[listLength-1].questionOne, survei[listLength-1].questionTwo ],
-    })
-  
-  }
+      placeholders: [
+        survei[listLength - 1].sliderOne,
+        survei[listLength - 1].sliderTwo,
+        survei[listLength - 1].sliderThree,
+        survei[listLength - 1].questionOne,
+        survei[listLength - 1].questionTwo
+      ],
+      sliderOne: survei[listLength - 1].sliderOne,
+      sliderTwo: survei[listLength - 1].sliderTwo,
+      sliderThree: survei[listLength - 1].sliderThree,
+      questionOne: survei[listLength - 1].questionOne,
+      questionTwo: survei[listLength - 1].questionTwo
+    });
+  };
 
   render() {
-    const { sliderOne, sliderTwo, sliderThree, questionOne, questionTwo } = this.state;
+    const {
+      sliderOne,
+      sliderTwo,
+      sliderThree,
+      questionOne,
+      questionTwo
+    } = this.state;
 
-    const isInvalid = sliderOne === '' || sliderTwo === '' || sliderThree === '';
+    const isInvalid =
+      sliderOne === "" || sliderTwo === "" || sliderThree === "";
 
     return (
       <div>
-        {this.state.success ? <Success>Utvärderingen har skickats!</Success> : null }
-        { !this.state.loading ?
+        {this.state.success ? (
+          <Success>Utvärderingen har skickats!</Success>
+        ) : null}
+        {!this.state.loading ? (
           <FormStyle fullWidth>
             <h1>Skapa nytt formulär</h1>
 
@@ -188,15 +183,17 @@ class CreateSurvey extends Component {
               </button>
             </form>
           </FormStyle>
-          : <Loading>Website is loading..</Loading> }
-        </div>
-      );
-    }
+        ) : (
+          <Loading>Website is loading..</Loading>
+        )}
+      </div>
+    );
   }
+}
 
-  const condition = authUser => !!authUser;
+const condition = authUser => !!authUser;
 
-  export default compose(
-    withFirebase,
-    withAuthorization(condition),
-  )(CreateSurvey);
+export default compose(
+  withFirebase,
+  withAuthorization(condition)
+)(CreateSurvey);
