@@ -19,13 +19,22 @@ import {
   Legend
 } from "recharts";
 
-//Calculate the average of an array
-const q1 = arr => {
-  const reducer = (total, currentValue) => total + currentValue;
-  const sum = arr.reduce(reducer);
-  return sum / arr.length;
-};
-q1([5, 4, 4, 5, 3, 2, 3, 4, 4, 5]); //?
+//Test array [2, 56, 3, 41, 0, 4, 100, 23]
+// Calculate average of values array. The average is saved as "avg" variable.
+let values = [5, 4, 4, 5, 3, 2, 3, 4, 4, 5];
+let sum = values.reduce((previous, current) => (current += previous));
+let avg = sum / values.length;
+
+console.log(avg);
+
+// :thinking: //
+// //Calculate the average of an array
+// const q1 = arr => {
+//   const reducer = (total, currentValue) => total + currentValue;
+//   const sum = arr.reduce(reducer);
+//   return sum / arr.length;
+// };
+// q1([5, 4, 4, 5, 3, 2, 3, 4, 4, 5]); //?
 
 const data1 = [
   { name: "Fråga 1", value: 10 },

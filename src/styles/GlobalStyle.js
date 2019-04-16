@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
-import { LoadingKeyframe, KeyFrameSucces } from "./Keyframes";
+import { LoadingKeyframe } from "./Keyframes";
 
 const GlobalStyle = createGlobalStyle`
   :root {

@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import {Menu} from 'styled-icons/material/Menu';
-import {Cross} from 'styled-icons/icomoon/Cross';
-import {UserPlus} from 'styled-icons/icomoon/UserPlus';
-import {DoorOpen} from 'styled-icons/fa-solid/DoorOpen';
-import {DownArrowSquare} from 'styled-icons/boxicons-solid/DownArrowSquare'
+import styled from "styled-components";
+import { Menu } from "styled-icons/material/Menu";
+import { Cross } from "styled-icons/icomoon/Cross";
+import { UserPlus } from "styled-icons/icomoon/UserPlus";
+import { DoorOpen } from "styled-icons/fa-solid/DoorOpen";
+//import {DownArrowSquare} from 'styled-icons/boxicons-solid/DownArrowSquare'
 
 export const HamburgerMenu = styled(Menu)`
   height: 3rem;
@@ -18,11 +18,11 @@ export const NavCross = styled(Cross)`
 export const SignUpIcon = styled(UserPlus)`
   height: 5rem;
   width: 5rem;
-  margin:1em;
+  margin: 1em;
 `;
 
 export const LoginIcon = styled(DoorOpen)`
   height: 5rem;
   width: 5rem;
-  margin:1em;
+  margin: 1em;
 `;

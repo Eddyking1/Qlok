@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { compose } from 'recompose';
-import {
-  withAuthorization,
-} from '../Session';
-import { withFirebase } from '../Firebase';
-import {FormStyle, Success, Loading} from '../../styles/GlobalStyle';
+import React, { Component } from "react";
+import { compose } from "recompose";
+import { withAuthorization } from "../Session";
+import { withFirebase } from "../Firebase";
+import { FormStyle, Success, Loading } from "../../styles/GlobalStyle";
 
 class CreateSurvey extends Component {
   constructor(props) {
@@ -18,7 +16,7 @@ class CreateSurvey extends Component {
       sliderThree: "",
       questionOne: "",
       questionTwo: "",
-      currentEducation: "",
+      currentEducation: ""
     };
   }
 
@@ -29,8 +27,7 @@ class CreateSurvey extends Component {
     // this.getCurrentWeek();
   }
 
-  componentWillUnmount() {
-  }
+  componentWillUnmount() {}
 
   // getLatestForm = () => {
   //   this.props.firebase.surveys().once('value', snapshot => {
@@ -46,17 +43,19 @@ class CreateSurvey extends Component {
   // }
 
   getCurrentEducation = () => {
-    this.setState({loading: true});
-    this.props.firebase.user(this.props.authUser.uid).once("value", snapshot => {
-      const user = snapshot.val();
-      if(user.education) {
-        this.setState({
-          currentEducation: user.education,
-        })
-        this.setState({loading: false});
-      }
-    })
-  }
+    this.setState({ loading: true });
+    this.props.firebase
+      .user(this.props.authUser.uid)
+      .once("value", snapshot => {
+        const user = snapshot.val();
+        if (user.education) {
+          this.setState({
+            currentEducation: user.education
+          });
+          this.setState({ loading: false });
+        }
+      });
+  };
 
   // getEductationUsersFromDB = () => {
   //   this.props.firebase.users().on("value", snapshot => {
@@ -76,13 +75,20 @@ class CreateSurvey extends Component {
   //   })
   // }
 
-
-  onSubmit = (event) => {
+  onSubmit = event => {
     this.setState({
-      success: true,
+      success: true
     });
 
-    const { sliderOne, sliderTwo, sliderThree, questionOne, questionTwo, currentEdcStudents, currentEducation} = this.state;
+    const {
+      sliderOne,
+      sliderTwo,
+      sliderThree,
+      questionOne,
+      questionTwo,
+      /*currentEdcStudents,*/
+      currentEducation
+    } = this.state;
     this.props.firebase.surveys().push({
       sliderOne: sliderOne,
       sliderTwo: sliderTwo,
@@ -94,27 +100,36 @@ class CreateSurvey extends Component {
       education: currentEducation,
       answered: "",
       chartAnswers: "",
-      altAnswers: "",
+      altAnswers: ""
     });
     event.preventDefault();
-  }
+  };
 
-  onChange = (event) => {
+  onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
     this.setState({
       success: false
     });
-  }
+  };
 
   render() {
-    const { sliderOne, sliderTwo, sliderThree, questionOne, questionTwo } = this.state;
+    const {
+      sliderOne,
+      sliderTwo,
+      sliderThree,
+      questionOne,
+      questionTwo
+    } = this.state;
 
-    const isInvalid = sliderOne === '' || sliderTwo === '' || sliderThree === '';
+    const isInvalid =
+      sliderOne === "" || sliderTwo === "" || sliderThree === "";
 
     return (
       <div>
-        {this.state.success ? <Success>Utvärderingen har skickats!</Success> : null }
-        { !this.state.loading ?
+        {this.state.success ? (
+          <Success>Utvärderingen har skickats!</Success>
+        ) : null}
+        {!this.state.loading ? (
           <FormStyle fullWidth>
             <h1>Skapa nytt formulär</h1>
 
@@ -159,15 +174,17 @@ class CreateSurvey extends Component {
               </button>
             </form>
           </FormStyle>
-          : <Loading>Website is loading..</Loading> }
-        </div>
-      );
-    }
+        ) : (
+          <Loading>Website is loading..</Loading>
+        )}
+      </div>
+    );
   }
+}
 
-  const condition = authUser => !!authUser;
+const condition = authUser => !!authUser;
 
-  export default compose(
-    withFirebase,
-    withAuthorization(condition),
-  )(CreateSurvey);
+export default compose(
+  withFirebase,
+  withAuthorization(condition)
+)(CreateSurvey);
