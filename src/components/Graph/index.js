@@ -19,6 +19,14 @@ import {
   Legend
 } from "recharts";
 
+//Calculate the average of an array
+const q1 = arr => {
+  const reducer = (total, currentValue) => total + currentValue;
+  const sum = arr.reduce(reducer);
+  return sum / arr.length;
+};
+q1([5, 4, 4, 5, 3, 2, 3, 4, 4, 5]); //?
+
 const data1 = [
   { name: "Fråga 1", value: 10 },
   { name: "Fråga 2", value: 9 },
@@ -66,126 +74,6 @@ const data2 = [
     TidLagd: 7,
     Nöjdhetsgrad: 10,
     EnkätSvar: 8
-  },
-  {
-    name: "Vecka 6",
-    Svårighetsgrad: 7,
-    Tempo: 6,
-    TidLagd: 5,
-    Nöjdhetsgrad: 2,
-    EnkätSvar: 10
-  },
-  {
-    name: "Vecka 7",
-    Svårighetsgrad: 2,
-    Tempo: 7,
-    TidLagd: 2,
-    Nöjdhetsgrad: 6,
-    EnkätSvar: 2
-  },
-  {
-    name: "Vecka 8",
-    Svårighetsgrad: 4,
-    Tempo: 5,
-    TidLagd: 3,
-    Nöjdhetsgrad: 10,
-    EnkätSvar: 8
-  },
-  {
-    name: "Vecka 9",
-    Svårighetsgrad: 5,
-    Tempo: 1,
-    TidLagd: 9,
-    Nöjdhetsgrad: 9,
-    EnkätSvar: 9
-  },
-  {
-    name: "Vecka 10",
-    Svårighetsgrad: 5,
-    Tempo: 5,
-    TidLagd: 5,
-    Nöjdhetsgrad: 10,
-    EnkätSvar: 10
-  },
-  {
-    name: "Vecka 11",
-    Svårighetsgrad: 2,
-    Tempo: 6,
-    TidLagd: 7,
-    Nöjdhetsgrad: 5,
-    EnkätSvar: 4
-  },
-  {
-    name: "Vecka 12",
-    Svårighetsgrad: 5,
-    Tempo: 5,
-    TidLagd: 4,
-    Nöjdhetsgrad: 5,
-    EnkätSvar: 7
-  },
-  {
-    name: "Vecka 13",
-    Svårighetsgrad: 7,
-    Tempo: 4,
-    TidLagd: 9,
-    Nöjdhetsgrad: 10,
-    EnkätSvar: 10
-  },
-  {
-    name: "Vecka 14",
-    Svårighetsgrad: 2,
-    Tempo: 1,
-    TidLagd: 3,
-    Nöjdhetsgrad: 4,
-    EnkätSvar: 1
-  },
-  {
-    name: "Vecka 15",
-    Svårighetsgrad: 9,
-    Tempo: 7,
-    TidLagd: 4,
-    Nöjdhetsgrad: 10,
-    EnkätSvar: 9
-  },
-  {
-    name: "Vecka 16",
-    Svårighetsgrad: 3,
-    Tempo: 6,
-    TidLagd: 5,
-    Nöjdhetsgrad: 2,
-    EnkätSvar: 10
-  },
-  {
-    name: "Vecka 17",
-    Svårighetsgrad: 2,
-    Tempo: 7,
-    TidLagd: 2,
-    Nöjdhetsgrad: 6,
-    EnkätSvar: 2
-  },
-  {
-    name: "Vecka 18",
-    Svårighetsgrad: 4,
-    Tempo: 5,
-    TidLagd: 3,
-    Nöjdhetsgrad: 10,
-    EnkätSvar: 8
-  },
-  {
-    name: "Vecka 19",
-    Svårighetsgrad: 5,
-    Tempo: 1,
-    TidLagd: 9,
-    Nöjdhetsgrad: 9,
-    EnkätSvar: 9
-  },
-  {
-    name: "Vecka 20",
-    Svårighetsgrad: 5,
-    Tempo: 5,
-    TidLagd: 5,
-    Nöjdhetsgrad: 10,
-    EnkätSvar: 10
   }
 ];
 
@@ -262,7 +150,7 @@ const renderActiveShape = props => {
   );
 };
 
-class HomePage extends Component {
+class GraphPage extends Component {
   constructor(props) {
     super(props);
 
@@ -376,4 +264,4 @@ const condition = authUser => !!authUser;
 export default compose(
   withFirebase,
   withAuthorization(condition)
-)(HomePage);
+)(GraphPage);
