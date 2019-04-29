@@ -29,18 +29,7 @@ class CreateSurvey extends Component {
 
   componentWillUnmount() {}
 
-  // getLatestForm = () => {
-  //   this.props.firebase.surveys().once('value', snapshot => {
-  //     let surveys = snapshot.val();
-  //     this.setState({
-  //       sliderOne: survey.sliderOne,
-  //       sliderTwo: survey.sliderTwo,
-  //       sliderThree: survey.sliderThree,
-  //       questionOne: survey.questionOne,
-  //       questionTwo: survey.questionTwo,
-  //     })
-  //   })
-  // }
+  componentWillUnmount() {}
 
   getCurrentEducation = () => {
     this.setState({ loading: true });
@@ -98,7 +87,7 @@ class CreateSurvey extends Component {
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       createdBy: this.props.authUser.uid,
       education: currentEducation,
-      answered: "",
+      Answered: "",
       chartAnswers: "",
       altAnswers: ""
     });
@@ -109,6 +98,47 @@ class CreateSurvey extends Component {
     this.setState({ [event.target.name]: event.target.value });
     this.setState({
       success: false
+    });
+  };
+
+  loadSurveysFromDB = () => {
+    this.props.firebase.surveys().on("value", snapshot => {
+      const surveysObject = snapshot.val();
+      if (surveysObject) {
+        const surveyList = Object.keys(surveysObject).map(key => ({
+          ...surveysObject[key],
+          uid: key
+        }));
+
+        this.setState(
+          {
+            surveys: surveyList
+          },
+          () => {
+            this.keepTypedValue();
+          }
+        );
+      }
+      console.log(this.state);
+    });
+  };
+
+  keepTypedValue = () => {
+    const listLength = this.state.surveys.length;
+    const survei = this.state.surveys;
+    this.setState({
+      placeholders: [
+        survei[listLength - 1].sliderOne,
+        survei[listLength - 1].sliderTwo,
+        survei[listLength - 1].sliderThree,
+        survei[listLength - 1].questionOne,
+        survei[listLength - 1].questionTwo
+      ],
+      sliderOne: survei[listLength - 1].sliderOne,
+      sliderTwo: survei[listLength - 1].sliderTwo,
+      sliderThree: survei[listLength - 1].sliderThree,
+      questionOne: survei[listLength - 1].questionOne,
+      questionTwo: survei[listLength - 1].questionTwo
     });
   };
 
@@ -139,35 +169,35 @@ class CreateSurvey extends Component {
                 value={sliderOne}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Fråga till diagram(*)"
+                placeholder={this.state.placeholders[0]}
               />
               <input
                 name="sliderTwo"
                 value={sliderTwo}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Fråga till diagram(*)"
+                placeholder={this.state.placeholders[1]}
               />
               <input
                 name="sliderThree"
                 value={sliderThree}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Fråga till diagram(*)"
+                placeholder={this.state.placeholders[2]}
               />
               <input
                 name="questionOne"
                 value={questionOne}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Skriv en fråga till studenterna"
+                placeholder={this.state.placeholders[3]}
               />
               <input
                 name="questionTwo"
                 value={questionTwo}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Skriva en fråga till studenterna"
+                placeholder={this.state.placeholders[4]}
               />
               <button disabled={isInvalid} type="submit">
                 Skicka ut formulär
