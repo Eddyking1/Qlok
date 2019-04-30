@@ -18,7 +18,7 @@ class CreateSurvey extends Component {
       questionTwo: "",
       currentEducation: "",
       placeholders: "",
-      week: null
+      week: undefined
     };
   }
 
@@ -79,6 +79,7 @@ class CreateSurvey extends Component {
     this.setState({
       success: false
     });
+    console.log(this.state.week);
   };
 
   loadSurveysFromDB = () => {
@@ -96,24 +97,10 @@ class CreateSurvey extends Component {
           },
           () => {
             this.keepTypedValue();
-            this.getWeekNumber();
           }
         );
       }
       console.log(this.state);
-    });
-  };
-
-  getWeekNumber = () => {
-    var target = new Date();
-    var dayNr = (target.getDay() + 6) % 7;
-    target.setDate(target.getDate() - dayNr + 3);
-    var jan4 = new Date(target.getFullYear(), 0, 4);
-    var dayDiff = (target - jan4) / 86400000;
-    var weekNr = 1 + Math.ceil(dayDiff / 7);
-
-    this.setState({
-      week: weekNr
     });
   };
 
