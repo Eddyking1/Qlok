@@ -17,7 +17,8 @@ class CreateSurvey extends Component {
       questionOne: "",
       questionTwo: "",
       currentEducation: "",
-      placeholders: ""
+      placeholders: "",
+      week: null
     };
   }
 
@@ -25,8 +26,6 @@ class CreateSurvey extends Component {
     this.getCurrentEducation();
     this.loadSurveysFromDB();
   }
-
-  componentWillUnmount() {}
 
   getCurrentEducation = () => {
     this.setState({ loading: true });
@@ -55,7 +54,8 @@ class CreateSurvey extends Component {
       questionOne,
       questionTwo,
       currentEdcStudents,
-      currentEducation
+      currentEducation,
+      week
     } = this.state;
     this.props.firebase.surveys().push({
       sliderOne: sliderOne,
@@ -68,7 +68,8 @@ class CreateSurvey extends Component {
       education: currentEducation,
       Answered: "",
       chartAnswers: "",
-      altAnswers: ""
+      altAnswers: "",
+      week: week
     });
     event.preventDefault();
   };
@@ -95,10 +96,24 @@ class CreateSurvey extends Component {
           },
           () => {
             this.keepTypedValue();
+            this.getWeekNumber();
           }
         );
       }
       console.log(this.state);
+    });
+  };
+
+  getWeekNumber = () => {
+    var target = new Date();
+    var dayNr = (target.getDay() + 6) % 7;
+    target.setDate(target.getDate() - dayNr + 3);
+    var jan4 = new Date(target.getFullYear(), 0, 4);
+    var dayDiff = (target - jan4) / 86400000;
+    var weekNr = 1 + Math.ceil(dayDiff / 7);
+
+    this.setState({
+      week: weekNr
     });
   };
 
@@ -111,7 +126,8 @@ class CreateSurvey extends Component {
         survei[listLength - 1].sliderTwo,
         survei[listLength - 1].sliderThree,
         survei[listLength - 1].questionOne,
-        survei[listLength - 1].questionTwo
+        survei[listLength - 1].questionTwo,
+        survei[listLength - 1].week
       ],
       sliderOne: survei[listLength - 1].sliderOne,
       sliderTwo: survei[listLength - 1].sliderTwo,
@@ -127,7 +143,8 @@ class CreateSurvey extends Component {
       sliderTwo,
       sliderThree,
       questionOne,
-      questionTwo
+      questionTwo,
+      week
     } = this.state;
 
     const isInvalid =
@@ -143,6 +160,16 @@ class CreateSurvey extends Component {
             <h1>Skapa nytt formulär</h1>
 
             <form onSubmit={this.onSubmit}>
+              <input
+                type="week"
+                name="week"
+                id="camp-week"
+                min="2019-W1"
+                max="2019-W52"
+                value={week}
+                onChange={this.onChange}
+                required
+              />
               <input
                 name="sliderOne"
                 value={sliderOne}
