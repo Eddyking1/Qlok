@@ -16,7 +16,9 @@ class CreateSurvey extends Component {
       sliderThree: "",
       questionOne: "",
       questionTwo: "",
-      currentEducation: ""
+      currentEducation: "",
+      placeholders: "",
+      week: undefined
     };
   }
 
@@ -26,10 +28,6 @@ class CreateSurvey extends Component {
     // this.getEductationUsersFromDB();
     // this.getCurrentWeek();
   }
-
-  componentWillUnmount() {}
-
-  componentWillUnmount() {}
 
   getCurrentEducation = () => {
     this.setState({ loading: true });
@@ -75,8 +73,9 @@ class CreateSurvey extends Component {
       sliderThree,
       questionOne,
       questionTwo,
-      /*currentEdcStudents,*/
-      currentEducation
+      currentEdcStudents,
+      currentEducation,
+      week
     } = this.state;
     this.props.firebase.surveys().push({
       sliderOne: sliderOne,
@@ -89,7 +88,8 @@ class CreateSurvey extends Component {
       education: currentEducation,
       Answered: "",
       chartAnswers: "",
-      altAnswers: ""
+      altAnswers: "",
+      week: week
     });
     event.preventDefault();
   };
@@ -99,6 +99,7 @@ class CreateSurvey extends Component {
     this.setState({
       success: false
     });
+    console.log(this.state.week);
   };
 
   loadSurveysFromDB = () => {
@@ -132,7 +133,8 @@ class CreateSurvey extends Component {
         survei[listLength - 1].sliderTwo,
         survei[listLength - 1].sliderThree,
         survei[listLength - 1].questionOne,
-        survei[listLength - 1].questionTwo
+        survei[listLength - 1].questionTwo,
+        survei[listLength - 1].week
       ],
       sliderOne: survei[listLength - 1].sliderOne,
       sliderTwo: survei[listLength - 1].sliderTwo,
@@ -148,7 +150,8 @@ class CreateSurvey extends Component {
       sliderTwo,
       sliderThree,
       questionOne,
-      questionTwo
+      questionTwo,
+      week
     } = this.state;
 
     const isInvalid =
@@ -164,6 +167,16 @@ class CreateSurvey extends Component {
             <h1>Skapa nytt formulär</h1>
 
             <form onSubmit={this.onSubmit}>
+              <input
+                type="week"
+                name="week"
+                id="camp-week"
+                min="2019-W1"
+                max="2019-W52"
+                value={week}
+                onChange={this.onChange}
+                required
+              />
               <input
                 name="sliderOne"
                 value={sliderOne}
