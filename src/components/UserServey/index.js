@@ -21,50 +21,69 @@ class UserSurvey extends Component {
       success: false,
       currentUser: null,
       notAnsweredSurvey: null,
-      surveysToAnswer: null,
+      sliderOneAnsw: 0,
+      sliderTwoAnsw: 0,
+      sliderThreeAnsw: 0,
     };
   }
 
   filterSurveys = () => {
-  const notAnswered = this.props.surveys.filter(surv => {
-    if (!surv.answered.includes(this.props.authUser.uid)) {
-      return surv;
-      }
-    })
-    this.setState({notAnsweredSurvey: notAnswered[0]});
+    this.setState({notAnsweredSurvey: this.state.surveys[0], currentSurveyId: this.state.surveys[0].uid});
   }
 
   componentDidMount() {
-    this.filterSurveys();
+    this.loadSurveysFromDB();
   }
+
+  loadSurveysFromDB = () => {
+   this.props.firebase.surveys().on("value", snapshot => {
+     const surveysObject = snapshot.val();
+     if (surveysObject) {
+       const surveyList = Object.keys(surveysObject).map(key => ({
+         ...surveysObject[key],
+         uid: key
+       }));
+
+       this.setState({ surveys: surveyList}, () => {
+         this.filterSurveys();
+       });
+     }
+   });
+  };
 
   showSurvey = (event) => {
     this.setState({open: true});
     console.log(this.state.open);
   }
 
-  onSubmit = (event, surveyId) => {
+  onSubmit = (event) => {
+    event.preventDefault();
     this.setState({
       success: true,
     });
 
-    this.updateSurvey(surveyId,"chartAnswers", this.state.chartAnswers);
-    this.updateSurvey(surveyId,"answered", this.state.answered);
-    this.updateSurvey(surveyId,"altAnswers", this.state.altAnswers);
+    this.pushToDB();
 
-    event.preventDefault();
   }
 
-  updateSurvey = (surveyId, string, value) => {
-    this.props.firebase.survey(surveyId).child(string).set(value);
-  }
+  pushToDB = () => {
+    const {sliderOneAnsw, sliderTwoAnsw, sliderThreeAnsw, questionOneAnsw, questionTwoAnsw} = this.state;
+    this.props.firebase.survey(this.state.currentSurveyId).child('answers').push({
+      sliderOneAnswers: sliderOneAnsw,
+      sliderTwoAnswers: sliderTwoAnsw,
+      sliderThreeAnswers: sliderThreeAnsw,
+      questionOneAnswers: questionOneAnsw,
+      questionTwoAnswers: questionTwoAnsw,
+    });
 
+    this.props.firebase.survey(this.state.currentSurveyId).child('answeredUsers').update({ [this.props.authUser.uid]: true })
+    this.props.firebase.user(this.props.authUser.uid).child('answeredSurveys').update({ [this.state.currentSurveyId]: true })
+}
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
     this.setState({
       success: false
     });
-    console.log(this.state.sliderOneAnsw);
   }
 
   render() {
@@ -75,10 +94,10 @@ class UserSurvey extends Component {
       <div>
         {success ? <Success>Utvärderingen har lämmnats!</Success> : null }
         { !loading && notAnsweredSurvey ?
-          <Survey name={notAnsweredSurvey.uid} key={notAnsweredSurvey.uid} onClick={this.showSurvey}>
-          <h1>{notAnsweredSurvey.uid}</h1>
+          <Survey>
+          <h1>survey</h1>
             <FormStyle>
-              <form onSubmit={() => this.onSubmit()}>
+              <form onSubmit={(event) => this.onSubmit(event)}>
                 <label>{notAnsweredSurvey.sliderOne}</label>
                 <input
                   name="sliderOneAnsw"
