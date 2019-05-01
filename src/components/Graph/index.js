@@ -19,29 +19,43 @@ import {
   Legend
 } from "recharts";
 
-//Test array [2, 56, 3, 41, 0, 4, 100, 23]
-// Calculate average of values array. The average is saved as "avg" variable.
-let values = [5, 4, 4, 5, 3, 2, 3, 4, 4, 5];
-let sum = values.reduce((previous, current) => (current += previous));
-let avg = sum / values.length;
-
-console.log(avg);
-
-// :thinking: //
-// //Calculate the average of an array
-// const q1 = arr => {
-//   const reducer = (total, currentValue) => total + currentValue;
-//   const sum = arr.reduce(reducer);
-//   return sum / arr.length;
-// };
-// q1([5, 4, 4, 5, 3, 2, 3, 4, 4, 5]); //?
-
+//--------------------------------//
+//--------------------------------------------------------------------//
+//Question 1 - Array Values
+let q1Val = [5, 4, 4, 5, 3, 2, 3, 4, 4, 5];
+//Question 1 - Get Average
+let q1Sum = q1Val.reduce((previous, current) => (current += previous));
+let q1Avg = q1Sum / q1Val.length;
+//--------------------------------//
+//--------------------------------------------------------------------//
+//--------------------------------//
+//Question 2 - Array Values
+let q2Val = [1, 5, 5, 1, 2, 1, 2, 5, 5, 1];
+//Question 2 - Get Average
+let q2Sum = q2Val.reduce((previous, current) => (current += previous));
+let q2Avg = q2Sum / q2Val.length;
+//--------------------------------//
+//--------------------------------------------------------------------//
+//--------------------------------//
+//Question 3 - Array Values
+let q3Val = [3, 2, 2, 3, 3, 4, 3, 2, 2, 3];
+//Question 3 - Get Average
+let q3Sum = q3Val.reduce((previous, current) => (current += previous));
+let q3Avg = q3Sum / q3Val.length;
+//--------------------------------//
+//--------------------------------------------------------------------//
+//--------------------------------//
+/*Thinking*/ console.log(q1Avg, q2Avg, q3Avg);
+//--------------------------------//
+//--------------------------------------------------------------------//
+//--------------------------------//
 const data1 = [
-  { name: "Fråga 1", value: 10 },
-  { name: "Fråga 2", value: 9 },
-  { name: "Fråga 3", value: 9 },
-  { name: "Fråga 4", value: 6 }
+  { name: "Fråga 1", value: q1Avg },
+  { name: "Fråga 2", value: q2Avg },
+  { name: "Fråga 3", value: q3Avg }
 ];
+//--------------------------------------------------------------------//
+//--------------------------------//
 
 const data2 = [
   {
@@ -182,9 +196,9 @@ class GraphPage extends Component {
           uid: key
         }));
 
-        this.setState({
-          surveys: surveyList
-        });
+        // this.setState({
+        //   surveys: surveyList
+        // });
       }
     });
   };
