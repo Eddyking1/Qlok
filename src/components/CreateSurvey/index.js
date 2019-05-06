@@ -24,8 +24,6 @@ class CreateSurvey extends Component {
 
   componentDidMount() {
     this.getCurrentEducation();
-
-    // this.getEductationUsersFromDB();
     // this.getCurrentWeek();
   }
 
@@ -38,29 +36,31 @@ class CreateSurvey extends Component {
         if (user.education) {
           this.setState({
             currentEducation: user.education
+          }, () => {
+            this.getParticipantsFromDB();
           });
-          this.setState({ loading: false });
         }
       });
   };
 
-  // getEductationUsersFromDB = () => {
-  //   this.props.firebase.users().on("value", snapshot => {
-  //     let usersObject = snapshot.val();
-  //
-  //     const users = Object.keys(usersObject).map(key => ({
-  //       ...usersObject[key],
-  //       uid: key,
-  //       completed: false,
-  //     }));
-  //
-  //
-  //     let currentEdcUsers = users.filter(user => user.education === this.state.currentEducation);
-  //     this.setState({
-  //       currentEdcStudents: currentEdcUsers,
-  //     })
-  //   })
-  // }
+  getParticipantsFromDB = () => {
+    this.props.firebase.education(this.state.currentEducation).child("participants").on("value", snapshot => {
+      let participants = snapshot.val();
+      if(participants) {
+        this.setState({participants: Object.keys(participants), loading: false});
+      }
+      console.log(this.state.participants);
+    });
+  }
+
+  pushSurveyToParticipants = (surveyId) => {
+    
+    this.props.firebase.user().child("invitedTo").update({[surveyId]: true});
+  }
+
+  pushParticipantsToSurvey = (surveyId) => {
+    this.props.firebase.survey(surveyId).child("invitedTo").update({[this.props.authUser.uid]: true});
+  }
 
   onSubmit = event => {
     this.setState({
@@ -86,10 +86,11 @@ class CreateSurvey extends Component {
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       createdBy: this.props.authUser.uid,
       education: currentEducation,
-      Answered: "",
-      chartAnswers: "",
-      altAnswers: "",
       week: week
+    }).then((snap) => {
+     const key = snap.key
+     this.pushSurveyToParticipants(key);
+     this.pushParticipantsToSurvey(key);
     });
     event.preventDefault();
   };
