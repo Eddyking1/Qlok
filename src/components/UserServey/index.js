@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { compose } from "recompose";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
-import { FormStyle, Success, Loading } from "../../styles/GlobalStyle";
+import { Success, Loading } from "../../styles/GlobalStyle";
 import styled from "styled-components";
+import { SurveyOutput } from "./styles";
 
 const Survey = styled.div`
   width: 100%;
@@ -122,8 +123,7 @@ class UserSurvey extends Component {
         {success ? <Success>Utvärderingen har lämmnats!</Success> : null}
         {!loading && notAnsweredSurvey ? (
           <Survey>
-            <h1>survey</h1>
-            <FormStyle>
+            <SurveyOutput>
               <form onSubmit={event => this.onSubmit(event)}>
                 <label>{notAnsweredSurvey.sliderOne}</label>
                 <input
@@ -173,7 +173,7 @@ class UserSurvey extends Component {
                 />
                 <button type="submit">Skicka in svar</button>
               </form>
-            </FormStyle>
+            </SurveyOutput>
           </Survey>
         ) : (
           <Loading>Website is loading..</Loading>
