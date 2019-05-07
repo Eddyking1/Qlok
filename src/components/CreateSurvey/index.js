@@ -18,13 +18,14 @@ class CreateSurvey extends Component {
       questionTwo: "",
       currentEducation: "",
       placeholders: "",
-      week: undefined
+      surveys: undefined,
+      week: ""
     };
   }
 
   componentDidMount() {
     this.getCurrentEducation();
-    // this.getCurrentWeek();
+    this.loadSurveysFromDB();
   }
 
   getCurrentEducation = () => {
@@ -49,18 +50,16 @@ class CreateSurvey extends Component {
       if(participants) {
         this.setState({participants: Object.keys(participants), loading: false});
       }
-      console.log(this.state.participants);
     });
   }
 
-  pushSurveyToParticipants = (surveyId) => {
-    
-    this.props.firebase.user().child("invitedTo").update({[surveyId]: true});
-  }
-
-  pushParticipantsToSurvey = (surveyId) => {
-    this.props.firebase.survey(surveyId).child("invitedTo").update({[this.props.authUser.uid]: true});
-  }
+  // pushSurveyToParticipants = (surveyId) => {
+  //   this.props.firebase.user().child("invitedTo").update({[surveyId]: true});
+  // }
+  //
+  // pushParticipantsToSurvey = (surveyId) => {
+  //   this.props.firebase.survey(surveyId).child("invitedTo").update({[this.props.authUser.uid]: true});
+  // }
 
   onSubmit = event => {
     this.setState({
@@ -89,8 +88,8 @@ class CreateSurvey extends Component {
       week: week
     }).then((snap) => {
      const key = snap.key
-     this.pushSurveyToParticipants(key);
-     this.pushParticipantsToSurvey(key);
+     // this.pushSurveyToParticipants(key);
+     // this.pushParticipantsToSurvey(key);
     });
     event.preventDefault();
   };
@@ -127,6 +126,7 @@ class CreateSurvey extends Component {
 
   keepTypedValue = () => {
     const listLength = this.state.surveys.length;
+    console.log(listLength);
     const survei = this.state.surveys;
     this.setState({
       placeholders: [
@@ -152,7 +152,9 @@ class CreateSurvey extends Component {
       sliderThree,
       questionOne,
       questionTwo,
-      week
+      week,
+      surveys,
+      success
     } = this.state;
 
     const isInvalid =
@@ -160,7 +162,7 @@ class CreateSurvey extends Component {
 
     return (
       <div>
-        {this.state.success ? (
+        {success && surveys ? (
           <Success>Utvärderingen har skickats!</Success>
         ) : null}
         {!this.state.loading ? (
