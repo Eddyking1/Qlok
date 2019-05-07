@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   passwordTwo: "",
   educations: null,
   education: "",
+  adminKey: "",
   error: null,
   success: false
 };
@@ -36,11 +37,17 @@ class SignUpFormBase extends Component {
 
   onSubmit = event => {
     this.setState({ success: true });
-    const { username, email, passwordOne, education } = this.state;
+    const { username, email, passwordOne, education, adminKey } = this.state;
+    const adminKeyTrue = "1111";
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
+        if(adminKey === adminKeyTrue) {
+          this.props.firebase.education(education).child("admins").update({[authUser.user.uid]: true});
+        } else {
+          this.props.firebase.education(education).child("participants").update({[authUser.user.uid]: true});
+        }
         return this.props.firebase.user(authUser.user.uid).set({
           username,
           email,
@@ -54,17 +61,13 @@ class SignUpFormBase extends Component {
       .catch(error => {
         this.setState({ error });
       });
-
     event.preventDefault();
   };
 
   getEducationsFromDB = () => {
     this.props.firebase.educations().once("value", snapshot => {
       const educationsObject = snapshot.val();
-      const educationList = Object.keys(educationsObject).map(key => ({
-        value: educationsObject[key],
-        uid: key
-      }));
+      const educationList = Object.keys(educationsObject);
       this.setState({
         educations: educationList
       });
@@ -75,8 +78,8 @@ class SignUpFormBase extends Component {
     var options = [];
     this.state.educations.forEach(education => {
       options.push(
-        <option key={education.uid} value={education.uid}>
-          {education.value}
+        <option key={education} value={education}>
+          {education}
         </option>
       );
     });
@@ -99,6 +102,7 @@ class SignUpFormBase extends Component {
       passwordTwo,
       education,
       educations,
+      adminKey,
       error
     } = this.state;
 
@@ -115,7 +119,7 @@ class SignUpFormBase extends Component {
           <SignUpIcon />
           {educations ? (
             <select
-              value={this.state.education}
+              value={this.state.education.uid}
               onChange={this.handleChangeSelect}
             >
               <option>Välj utbildning</option>
@@ -151,6 +155,15 @@ class SignUpFormBase extends Component {
             type="password"
             placeholder="Bekräfta lösenord"
           />
+
+          <input
+            name="adminKey"
+            value={adminKey}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Admin verifieringskod"
+          />
+
           <button disabled={isInvalid} type="submit">
             Skapa konto!
           </button>

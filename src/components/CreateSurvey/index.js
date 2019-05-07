@@ -18,15 +18,14 @@ class CreateSurvey extends Component {
       questionTwo: "",
       currentEducation: "",
       placeholders: "",
-      week: undefined
+      surveys: undefined,
+      week: ""
     };
   }
 
   componentDidMount() {
     this.getCurrentEducation();
-
-    // this.getEductationUsersFromDB();
-    // this.getCurrentWeek();
+    this.loadSurveysFromDB();
   }
 
   getCurrentEducation = () => {
@@ -38,28 +37,28 @@ class CreateSurvey extends Component {
         if (user.education) {
           this.setState({
             currentEducation: user.education
+          }, () => {
+            this.getParticipantsFromDB();
           });
-          this.setState({ loading: false });
         }
       });
   };
 
-  // getEductationUsersFromDB = () => {
-  //   this.props.firebase.users().on("value", snapshot => {
-  //     let usersObject = snapshot.val();
+  getParticipantsFromDB = () => {
+    this.props.firebase.education(this.state.currentEducation).child("participants").on("value", snapshot => {
+      let participants = snapshot.val();
+      if(participants) {
+        this.setState({participants: Object.keys(participants), loading: false});
+      }
+    });
+  }
+
+  // pushSurveyToParticipants = (surveyId) => {
+  //   this.props.firebase.user().child("invitedTo").update({[surveyId]: true});
+  // }
   //
-  //     const users = Object.keys(usersObject).map(key => ({
-  //       ...usersObject[key],
-  //       uid: key,
-  //       completed: false,
-  //     }));
-  //
-  //
-  //     let currentEdcUsers = users.filter(user => user.education === this.state.currentEducation);
-  //     this.setState({
-  //       currentEdcStudents: currentEdcUsers,
-  //     })
-  //   })
+  // pushParticipantsToSurvey = (surveyId) => {
+  //   this.props.firebase.survey(surveyId).child("invitedTo").update({[this.props.authUser.uid]: true});
   // }
 
   onSubmit = event => {
@@ -86,10 +85,11 @@ class CreateSurvey extends Component {
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       createdBy: this.props.authUser.uid,
       education: currentEducation,
-      Answered: "",
-      chartAnswers: "",
-      altAnswers: "",
       week: week
+    }).then((snap) => {
+     const key = snap.key
+     // this.pushSurveyToParticipants(key);
+     // this.pushParticipantsToSurvey(key);
     });
     event.preventDefault();
   };
@@ -126,6 +126,7 @@ class CreateSurvey extends Component {
 
   keepTypedValue = () => {
     const listLength = this.state.surveys.length;
+    console.log(listLength);
     const survei = this.state.surveys;
     this.setState({
       placeholders: [
@@ -151,7 +152,9 @@ class CreateSurvey extends Component {
       sliderThree,
       questionOne,
       questionTwo,
-      week
+      week,
+      surveys,
+      success
     } = this.state;
 
     const isInvalid =
@@ -159,7 +162,7 @@ class CreateSurvey extends Component {
 
     return (
       <div>
-        {this.state.success ? (
+        {success && surveys ? (
           <Success>Utvärderingen har skickats!</Success>
         ) : null}
         {!this.state.loading ? (
