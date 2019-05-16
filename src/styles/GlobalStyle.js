@@ -180,6 +180,7 @@ const FormStyle = styled.div`
   h1 {
     height: 2em;
     text-align: center;
+
   }
   p {
     padding: 1em 0 0;
