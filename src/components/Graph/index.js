@@ -3,6 +3,7 @@ import { compose } from "recompose";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import UserServey from "../UserServey";
+import { PieChartCont } from "../../styles/GlobalStyle";
 
 import {
   PieChart,
@@ -127,7 +128,7 @@ const renderActiveShape = props => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill="#000">
         {payload.name}
       </text>
       <Sector
@@ -159,7 +160,7 @@ const renderActiveShape = props => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`PV ${value}`}</text>
+      >{`Question Average ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -167,7 +168,7 @@ const renderActiveShape = props => {
         textAnchor={textAnchor}
         fill="#999"
       >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        {`(Overall Average ${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
   );
@@ -230,23 +231,24 @@ class GraphPage extends Component {
           <h1>Website is loading...</h1>
         )}
         <div>
-          <h1 className="chartHeadline">Klass FE18 - Kyh Stockholm</h1>
+          {/* <h1 className="chartHeadline">Klass FE18 - Kyh Stockholm</h1> */}
         </div>
-        <PieChart width={500} height={500}>
-          <Pie
-            activeIndex={this.state.activeIndex}
-            activeShape={renderActiveShape}
-            data={data1}
-            cx={200}
-            cy={200}
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-            onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-
+        <PieChartCont>
+          <PieChart width={500} height={500}>
+            <Pie
+              activeIndex={this.state.activeIndex}
+              activeShape={renderActiveShape}
+              data={data1}
+              cx={200}
+              cy={200}
+              innerRadius={60}
+              outerRadius={80}
+              fill="#E1D3C1"
+              dataKey="value"
+              onMouseEnter={this.onPieEnter}
+            />
+          </PieChart>
+        </PieChartCont>
         <div style={{ width: "100%", height: 500 }}>
           <ResponsiveContainer>
             <ComposedChart
@@ -262,7 +264,11 @@ class GraphPage extends Component {
             >
               <CartesianGrid stroke="#f5f5f5" />
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis
+                type="number"
+                domain={[0, 10]}
+                ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+              />
               <Tooltip />
               <Legend />
               <Area
