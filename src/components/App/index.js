@@ -10,6 +10,7 @@ import AccountPage from "../Account";
 import AdminPage from "../Admin";
 import CreateSurveyPage from "../CreateSurvey";
 import GraphPage from "../Graph";
+import Piechart from "../PieChart";
 
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
@@ -42,6 +43,7 @@ class App extends Component {
           <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
           <Route path={ROUTES.HOME} component={HomePage} />
           <Route path={ROUTES.GRAPH} component={GraphPage} />
+          <Route path={ROUTES.PIECHART} component={Piechart} />
           <Route path={ROUTES.ACCOUNT} component={AccountPage} />
           <Route path={ROUTES.ADMIN} component={AdminPage} />
           <Route path={ROUTES.CREATE_SURVEY} component={CreateSurveyPage} />

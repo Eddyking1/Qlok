@@ -2,6 +2,7 @@ export const SIGN_UP = "/signup";
 export const SIGN_IN = "/signin";
 export const HOME = "/home";
 export const GRAPH = "/graph";
+export const PIECHART = "/piechart";
 export const ACCOUNT = "/account";
 export const ADMIN = "/admin";
 export const CREATE_SURVEY = "/create-survey";
