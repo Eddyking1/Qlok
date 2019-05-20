@@ -17,6 +17,7 @@ class CreateSurvey extends Component {
       questionOne: "",
       questionTwo: "",
       currentEducation: "",
+      participants: undefined,
       placeholders: "",
       surveys: undefined,
       week: ""
@@ -50,16 +51,24 @@ class CreateSurvey extends Component {
       if(participants) {
         this.setState({participants: Object.keys(participants), loading: false});
       }
+      console.log(this.state.participants);
+
     });
   }
 
-  // pushSurveyToParticipants = (surveyId) => {
-  //   this.props.firebase.user().child("invitedTo").update({[surveyId]: true});
-  // }
-  //
-  // pushParticipantsToSurvey = (surveyId) => {
-  //   this.props.firebase.survey(surveyId).child("invitedTo").update({[this.props.authUser.uid]: true});
-  // }
+  pushSurveyToParticipants = (surveyId) => {
+    const {participants} = this.state;
+    for (let i = 0; i < participants.length; i++) {
+      this.props.firebase.user(participants[i]).child("invitedTo").update({[surveyId]: true});
+    }
+  }
+
+  pushParticipantsToSurvey = (surveyId) => {
+    const {participants} = this.state;
+    for (let i = 0; i < participants.length; i++) {
+      this.props.firebase.survey(surveyId).child("invitedTo").update({[participants[i]]: true});
+    }
+  }
 
   onSubmit = event => {
     this.setState({
@@ -88,8 +97,8 @@ class CreateSurvey extends Component {
       week: week
     }).then((snap) => {
      const key = snap.key
-     // this.pushSurveyToParticipants(key);
-     // this.pushParticipantsToSurvey(key);
+     this.pushSurveyToParticipants(key);
+     this.pushParticipantsToSurvey(key);
     });
     event.preventDefault();
   };
