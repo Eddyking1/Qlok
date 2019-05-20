@@ -3,6 +3,8 @@ import { compose } from "recompose";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import UserServey from "../UserServey";
+import { Loading } from "../../styles/GlobalStyle";
+
 
 class HomePage extends Component {
   constructor(props) {
@@ -47,7 +49,7 @@ class HomePage extends Component {
             <UserServey/>
           </div>
         ) : (
-          <h1>Website is loading...</h1>
+          <Loading>Website is loading.. </Loading>
         )}
       </div>
     );
