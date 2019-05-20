@@ -20,44 +20,47 @@ class UserSurvey extends Component {
     this.state = {
       loading: false,
       success: false,
-      currentUser: null,
       notAnsweredSurvey: null,
+      invitedToSurveys: null,
       sliderOneAnsw: 0,
       sliderTwoAnsw: 0,
       sliderThreeAnsw: 0
     };
   }
 
-  filterSurveys = () => {
-    this.setState({
-      notAnsweredSurvey: this.state.surveys[0],
-      currentSurveyId: this.state.surveys[0].uid
-    });
-  };
-
   componentDidMount() {
-    this.loadSurveysFromDB();
+    this.getInvitedToSurveys();
   }
 
-  loadSurveysFromDB = () => {
-    this.props.firebase.surveys().on("value", snapshot => {
-      const surveysObject = snapshot.val();
-      if (surveysObject) {
-        const surveyList = Object.keys(surveysObject).map(key => ({
-          ...surveysObject[key],
+  getInvitedToSurveys = () => {
+    this.props.firebase.user(this.props.authUser.uid).child("invitedTo").on("value", snapshot => {
+      const userSurveys = snapshot.val();
+      if(userSurveys) {
+        console.log("userSurveys", userSurveys);
+        const invitedToSurveys = Object.keys(userSurveys).map(key => ({
+          ...userSurveys[key],
           uid: key
         }));
-
-        this.setState({ surveys: surveyList }, () => {
+        this.setState({invitedToSurveys: invitedToSurveys}, () => {
+          console.log("invitedToSurveys", this.state.invitedToSurveys)
           this.filterSurveys();
+        })
+      }
+    })
+  }
+
+  filterSurveys = () => {
+    this.props.firebase.survey(this.state.invitedToSurveys[0].uid).on("value", snapshot => {
+      const notAnsweredSurvey = snapshot.val();
+      if(notAnsweredSurvey) {
+        this.setState({
+          notAnsweredSurvey: notAnsweredSurvey,
+          currentSurveyId: this.state.invitedToSurveys[0].uid
+        }, () => {
+          console.log("currentSurveyId", this.state.currentSurveyId)
         });
       }
-    });
-  };
-
-  showSurvey = event => {
-    this.setState({ open: true });
-    console.log(this.state.open);
+    })
   };
 
   onSubmit = event => {
@@ -65,7 +68,6 @@ class UserSurvey extends Component {
     this.setState({
       success: true
     });
-
     this.pushToDB();
   };
 
@@ -77,6 +79,7 @@ class UserSurvey extends Component {
       questionOneAnsw,
       questionTwoAnsw
     } = this.state;
+
     this.props.firebase
       .survey(this.state.currentSurveyId)
       .child("answers")
@@ -88,21 +91,23 @@ class UserSurvey extends Component {
         questionTwoAnswers: questionTwoAnsw
       });
 
-    this.props.firebase
-      .survey(this.state.currentSurveyId)
-      .child("answeredUsers")
-      .update({ [this.props.authUser.uid]: true });
-    this.props.firebase
-      .user(this.props.authUser.uid)
-      .child("answeredSurveys")
-      .update({ [this.state.currentSurveyId]: true });
+    this.props.firebase.survey(this.state.currentSurveyId).child("answeredUsers").update({ [this.props.authUser.uid]: true });
+    this.props.firebase.survey(this.state.currentSurveyId).child("invitedTo").update({[this.props.authUser.uid]: null});
+    this.props.firebase.user(this.props.authUser.uid).child("answeredSurveys").update({ [this.state.currentSurveyId]: true });
+    this.props.firebase.user(this.props.authUser.uid).child("invitedTo").update({[this.state.currentSurveyId]: null});
   };
+
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
     this.setState({
       success: false
     });
   };
+
+  componentWillUnmount() {
+    this.props.firebase.user().off();
+    this.props.firebase.survey().off();
+  }
 
   render() {
     const isInvalid =
@@ -121,10 +126,11 @@ class UserSurvey extends Component {
     return (
       <div>
         {success ? <Success>Utvärderingen har lämmnats!</Success> : null}
-        {!loading && notAnsweredSurvey ? (
+        {notAnsweredSurvey ? (
           <Survey>
             <SurveyOutput>
               <form onSubmit={event => this.onSubmit(event)}>
+                <h1>Enkät - {notAnsweredSurvey.education} - {notAnsweredSurvey.week}</h1>
                 <label>{notAnsweredSurvey.sliderOne}</label>
                 <input
                   name="sliderOneAnsw"
@@ -176,8 +182,9 @@ class UserSurvey extends Component {
             </SurveyOutput>
           </Survey>
         ) : (
-          <Loading>Website is loading..</Loading>
+          <h1>Du har inga fler enkäter att besvara</h1>
         )}
+        {loading ? <Loading>Website is loading..</Loading> : null};
       </div>
     );
   }

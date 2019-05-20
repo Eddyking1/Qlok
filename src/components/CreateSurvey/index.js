@@ -154,6 +154,10 @@ class CreateSurvey extends Component {
     });
   };
 
+  componentWillUnmount() {
+    this.props.firebase.education().off();
+  }
+
   render() {
     const {
       sliderOne,
