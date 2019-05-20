@@ -34,12 +34,6 @@ class HomePage extends Component {
     });
   };
 
-  onPieEnter = (data, index) => {
-    this.setState({
-      activeIndex: index
-    });
-  };
-
   componentWillUnmount() {
     this.props.firebase.surveys().off();
   }

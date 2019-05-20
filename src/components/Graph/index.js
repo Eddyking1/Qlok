@@ -197,9 +197,9 @@ class GraphPage extends Component {
           uid: key
         }));
 
-        // this.setState({
-        //   surveys: surveyList
-        // });
+        this.setState({
+          surveys: surveyList
+        });
       }
     });
   };
@@ -230,9 +230,6 @@ class GraphPage extends Component {
         ) : (
           <h1>Website is loading...</h1>
         )}
-        <div>
-          {/* <h1 className="chartHeadline">Klass FE18 - Kyh Stockholm</h1> */}
-        </div>
         <PieChartCont>
           <PieChart width={500} height={500}>
             <Pie
