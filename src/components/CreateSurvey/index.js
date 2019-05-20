@@ -179,9 +179,9 @@ class CreateSurvey extends Component {
           <Success>Utvärderingen har skickats!</Success>
         ) : null}
         {!this.state.loading ? (
+
           <FormStyle fullWidth>
             <h1>Skapa nytt formulär</h1>
-
             <form onSubmit={this.onSubmit}>
               <input
                 type="week"
