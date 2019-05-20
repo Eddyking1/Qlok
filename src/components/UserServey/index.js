@@ -4,7 +4,12 @@ import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import { Success, Loading } from "../../styles/GlobalStyle";
 import styled from "styled-components";
+<<<<<<< HEAD
 import { SurveyOutput, Message } from "./styles";
+=======
+import { SurveyOutput } from "./styles";
+import PieChartClass from "../PieChartClass";
+>>>>>>> pie chart integrated in user-servey
 
 const Survey = styled.div`
   width: 100%;
@@ -22,9 +27,16 @@ class UserSurvey extends Component {
       success: false,
       notAnsweredSurvey: null,
       invitedToSurveys: null,
+<<<<<<< HEAD
       sliderOneAnsw: 5,
       sliderTwoAnsw: 5,
       sliderThreeAnsw: 5
+=======
+      currentSurveyId: null,
+      sliderOneAnsw: 0,
+      sliderTwoAnsw: 0,
+      sliderThreeAnsw: 0
+>>>>>>> pie chart integrated in user-servey
     };
   }
 
@@ -33,16 +45,15 @@ class UserSurvey extends Component {
   }
 
   getInvitedToSurveys = () => {
+    this.setState({loading: true});
     this.props.firebase.user(this.props.authUser.uid).child("invitedTo").on("value", snapshot => {
       const userSurveys = snapshot.val();
       if(userSurveys) {
-        console.log("userSurveys", userSurveys);
         const invitedToSurveys = Object.keys(userSurveys).map(key => ({
           ...userSurveys[key],
           uid: key
         }));
-        this.setState({invitedToSurveys: invitedToSurveys}, () => {
-          console.log("invitedToSurveys", this.state.invitedToSurveys)
+        this.setState({invitedToSurveys: invitedToSurveys, loading: false}, () => {
           this.filterSurveys();
         })
       }
@@ -50,14 +61,13 @@ class UserSurvey extends Component {
   }
 
   filterSurveys = () => {
+    console.log(this.state.invitedToSurveys[0].uid);
     this.props.firebase.survey(this.state.invitedToSurveys[0].uid).on("value", snapshot => {
       const notAnsweredSurvey = snapshot.val();
       if(notAnsweredSurvey) {
         this.setState({
           notAnsweredSurvey: notAnsweredSurvey,
           currentSurveyId: this.state.invitedToSurveys[0].uid
-        }, () => {
-          console.log("currentSurveyId", this.state.currentSurveyId)
         });
       }
     })
@@ -127,6 +137,7 @@ class UserSurvey extends Component {
       <div>
         {success ? <Success>Utvärderingen har lämnats!</Success> : null}
         {notAnsweredSurvey ? (
+<<<<<<< HEAD
           <Survey>
             <SurveyOutput>
               <form onSubmit={event => this.onSubmit(event)}>
@@ -188,6 +199,71 @@ class UserSurvey extends Component {
         )}
         {loading ? <Loading>Website is loading..</Loading> : null}
 
+=======
+          <div>
+            <PieChartClass currentSurveyId = {this.state.currentSurveyId}> </PieChartClass>
+            <Survey>
+              <SurveyOutput>
+                <form onSubmit={event => this.onSubmit(event)}>
+                  <h1>Enkät - {notAnsweredSurvey.education} - {notAnsweredSurvey.week}</h1>
+                  <label>{notAnsweredSurvey.sliderOne}</label>
+                  <input
+                    name="sliderOneAnsw"
+                    value={sliderOneAnsw}
+                    onChange={this.onChange}
+                    type="range"
+                    min="0"
+                    max="10"
+                    step="1"
+                  />
+                  <label>{notAnsweredSurvey.sliderTwo}</label>
+                  <input
+                    name="sliderTwoAnsw"
+                    value={sliderTwoAnsw}
+                    onChange={this.onChange}
+                    type="range"
+                    min="0"
+                    max="10"
+                    step="1"
+                  />
+                  <label>{notAnsweredSurvey.sliderThree}</label>
+                  <input
+                    name="sliderThreeAnsw"
+                    value={sliderThreeAnsw}
+                    onChange={this.onChange}
+                    type="range"
+                    min="0"
+                    max="10"
+                    step="1"
+                  />
+                  <label>{notAnsweredSurvey.questionOne}</label>
+                  <textarea
+                    name="questionOneAnsw"
+                    value={questionOneAnsw}
+                    onChange={this.onChange}
+                    type="text"
+                    placeholder="svar..."
+                  />
+                  <label>{notAnsweredSurvey.questionTwo}</label>
+                  <textarea
+                    name="questionTwoAnsw"
+                    value={questionTwoAnsw}
+                    onChange={this.onChange}
+                    type="text"
+                    placeholder="svar..."
+                  />
+                  {isInvalid ?
+                  <button type="submit">Skicka in svar</button>
+                  : null}
+                </form>
+              </SurveyOutput>
+            </Survey>
+          </div>
+        ) : (
+            null
+        )}
+        {loading ? <Loading>Website is loading..</Loading> : null}
+>>>>>>> pie chart integrated in user-servey
       </div>
     );
   }

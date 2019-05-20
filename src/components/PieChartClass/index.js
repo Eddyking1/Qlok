@@ -32,7 +32,6 @@ let q3Avg = q3Sum / q3Val.length;
 //--------------------------------//
 //--------------------------------------------------------------------//
 //--------------------------------//
-/*Thinking*/ console.log(q1Avg, q2Avg, q3Avg);
 //--------------------------------//
 //--------------------------------------------------------------------//
 //--------------------------------//
@@ -117,20 +116,52 @@ const renderActiveShape = props => {
   );
 };
 
-class Piechart extends Component {
+class PieChartClass extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       surveys: null,
-      loading: false
+      loading: false,
+      activeIndex: 0,
+      surveyAnswers: null,
+      sliderOneAnswers: [],
+      sliderTwoAnswers: [],
+      sliderThreeAnswers: []
     };
   }
 
-  /* pie  */
-  state = {
-    activeIndex: 0
+  componentDidMount() {
+    this.getCurrentSurveyAnswers();
+  }
+
+  getCurrentSurveyAnswers = () => {
+    this.props.firebase.survey(this.props.currentSurveyId).child("answers").once("value", snapshot => {
+      const answersObj = snapshot.val();
+      if(answersObj) {
+        const surveyAnswers = Object.keys(answersObj).map(key => ({
+          ...answersObj[key],
+          uid: key
+        }));
+        this.setState({surveyAnswers: surveyAnswers}, () => {
+          this.filterAnswers();
+        });
+      }
+    })
   };
+
+  filterAnswers = () => {
+    const {surveyAnswers} = this.state;
+    const answ1 = [];
+    const answ2 = [];
+    const answ3 = [];
+    for (var i = 0; i < surveyAnswers.length; i++) {
+      answ1.push(surveyAnswers[i].sliderOneAnswers);
+      answ2.push(surveyAnswers[i].sliderTwoAnswers);
+      answ3.push(surveyAnswers[i].sliderThreeAnswers);
+    }
+    this.setState({sliderOneAnswers: answ1, sliderTwoAnswers: answ2, sliderThreeAnswers: answ3})
+  }
 
   onPieEnter = (data, index) => {
     this.setState({
@@ -141,6 +172,7 @@ class Piechart extends Component {
   render() {
     return (
       <div>
+      {this.props.currentSurveyId ?
         <PieChartCont>
           <PieChart width={500} height={500}>
             <Pie
@@ -157,6 +189,7 @@ class Piechart extends Component {
             />
           </PieChart>
         </PieChartCont>
+        : null}
       </div>
     );
   }
@@ -167,4 +200,4 @@ const condition = authUser => !!authUser;
 export default compose(
   withFirebase,
   withAuthorization(condition)
-)(Piechart);
+)(PieChartClass);
