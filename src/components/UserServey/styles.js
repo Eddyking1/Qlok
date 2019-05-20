@@ -17,9 +17,13 @@ export const SurveyOutput = styled.div`
     align-items: center;
     align-content: center;
     flex-direction: column;
-    width: ${props => (props.fullWidth ? "80%" : "")};
+    width: 80%;
 
+h1 {
+  padding: 20px 0 0;
+}
   }
+
   select {
     width: 100%;
     margin: 0.5em;
@@ -41,7 +45,8 @@ export const SurveyOutput = styled.div`
     height: 26px;
     -webkit-appearance: none;
     width: 100%;
-  }
+    }
+
   input[type=range]:focus {
     outline: none;
   }
@@ -127,17 +132,18 @@ export const SurveyOutput = styled.div`
   }
 
   textarea {
-    border: 1px solid var(--text-color);
+
+    border: 1px;
 	  border-radius: 5px;
     height: 100px;
-	  width: 520px;
+	  width: 80%;
     padding: 4px 0px 0px 4px;
     font-size: 16px;
     resize: none;
   }
 
 label {
-    margin: 2.2em 0;
+    margin: 1.8em 0;
     font-size: 22px;
 }
 
@@ -185,5 +191,17 @@ label {
       background-color: grey;
     }
   }
+`;
+
+export const Message = styled.div`
+display: flex;
+align-content: center;
+justify-content: center;
+align-items: center;
+
+h1 {
+  text-align: center;
+  padding: 30px 0 0;
+}
 
 `;

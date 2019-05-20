@@ -4,7 +4,7 @@ import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import { Success, Loading } from "../../styles/GlobalStyle";
 import styled from "styled-components";
-import { SurveyOutput } from "./styles";
+import { SurveyOutput, Message } from "./styles";
 
 const Survey = styled.div`
   width: 100%;
@@ -22,9 +22,9 @@ class UserSurvey extends Component {
       success: false,
       notAnsweredSurvey: null,
       invitedToSurveys: null,
-      sliderOneAnsw: 0,
-      sliderTwoAnsw: 0,
-      sliderThreeAnsw: 0
+      sliderOneAnsw: 5,
+      sliderTwoAnsw: 5,
+      sliderThreeAnsw: 5
     };
   }
 
@@ -125,7 +125,7 @@ class UserSurvey extends Component {
 
     return (
       <div>
-        {success ? <Success>Utvärderingen har lämmnats!</Success> : null}
+        {success ? <Success>Utvärderingen har lämnats!</Success> : null}
         {notAnsweredSurvey ? (
           <Survey>
             <SurveyOutput>
@@ -141,7 +141,7 @@ class UserSurvey extends Component {
                   max="10"
                   step="1"
                 />
-                <label>{notAnsweredSurvey.sliderTwo}</label>
+                <label>{notAnsweredSurvey.sliderTwo} </label>
                 <input
                   name="sliderTwoAnsw"
                   value={sliderTwoAnsw}
@@ -182,9 +182,12 @@ class UserSurvey extends Component {
             </SurveyOutput>
           </Survey>
         ) : (
+          <Message>
           <h1>Du har inga fler enkäter att besvara</h1>
+          </Message>
         )}
-        {loading ? <Loading>Website is loading..</Loading> : null};
+        {loading ? <Loading>Website is loading..</Loading> : null}
+
       </div>
     );
   }

@@ -108,17 +108,20 @@ const FormStyle = styled.div`
     margin: 0.5em;
     padding: 1em;
     font-size: 1.5em;
+    outline: none;
+    text-align-last: center;
 
     select select {
       -moz-appearance: none; /* Firefox */
       -webkit-appearance: none; /* Safari and Chrome */
       color: var(--main-button-color);
       background-color: var(--main-button-color);
-    }
+      }
     select::-ms-expand {
       display: none;
     }
   }
+
   input {
     font-size: 1.5em;
     border: none;
@@ -180,8 +183,9 @@ const FormStyle = styled.div`
   h1 {
     height: 2em;
     text-align: center;
-
+    padding: 15px 0 0;
   }
+
   p {
     padding: 1em 0 0;
     text-align: center;
