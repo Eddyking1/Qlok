@@ -44,7 +44,7 @@ class HomePage extends Component {
       <div>
         {!loading && surveys ? (
           <div>
-            <UserServey surveys={surveys} />{" "}
+            <UserServey/>
           </div>
         ) : (
           <h1>Website is loading...</h1>
