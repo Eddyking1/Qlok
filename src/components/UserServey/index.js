@@ -4,12 +4,8 @@ import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import { Success, Loading } from "../../styles/GlobalStyle";
 import styled from "styled-components";
-<<<<<<< HEAD
 import { SurveyOutput, Message } from "./styles";
-=======
-import { SurveyOutput } from "./styles";
 import PieChartClass from "../PieChartClass";
->>>>>>> pie chart integrated in user-servey
 
 const Survey = styled.div`
   width: 100%;
@@ -27,16 +23,13 @@ class UserSurvey extends Component {
       success: false,
       notAnsweredSurvey: null,
       invitedToSurveys: null,
-<<<<<<< HEAD
       sliderOneAnsw: 5,
       sliderTwoAnsw: 5,
-      sliderThreeAnsw: 5
-=======
+      sliderThreeAnsw: 5,
       currentSurveyId: null,
       sliderOneAnsw: 0,
       sliderTwoAnsw: 0,
       sliderThreeAnsw: 0
->>>>>>> pie chart integrated in user-servey
     };
   }
 
@@ -137,69 +130,6 @@ class UserSurvey extends Component {
       <div>
         {success ? <Success>Utvärderingen har lämnats!</Success> : null}
         {notAnsweredSurvey ? (
-<<<<<<< HEAD
-          <Survey>
-            <SurveyOutput>
-              <form onSubmit={event => this.onSubmit(event)}>
-                <h1>Enkät - {notAnsweredSurvey.education} - {notAnsweredSurvey.week}</h1>
-                <label>{notAnsweredSurvey.sliderOne}</label>
-                <input
-                  name="sliderOneAnsw"
-                  value={sliderOneAnsw}
-                  onChange={this.onChange}
-                  type="range"
-                  min="0"
-                  max="10"
-                  step="1"
-                />
-                <label>{notAnsweredSurvey.sliderTwo} </label>
-                <input
-                  name="sliderTwoAnsw"
-                  value={sliderTwoAnsw}
-                  onChange={this.onChange}
-                  type="range"
-                  min="0"
-                  max="10"
-                  step="1"
-                />
-                <label>{notAnsweredSurvey.sliderThree}</label>
-                <input
-                  name="sliderThreeAnsw"
-                  value={sliderThreeAnsw}
-                  onChange={this.onChange}
-                  type="range"
-                  min="0"
-                  max="10"
-                  step="1"
-                />
-                <label>{notAnsweredSurvey.questionOne}</label>
-                <textarea
-                  name="questionOneAnsw"
-                  value={questionOneAnsw}
-                  onChange={this.onChange}
-                  type="text"
-                  placeholder="svar..."
-                />
-                <label>{notAnsweredSurvey.questionTwo}</label>
-                <textarea
-                  name="questionTwoAnsw"
-                  value={questionTwoAnsw}
-                  onChange={this.onChange}
-                  type="text"
-                  placeholder="svar..."
-                />
-                <button type="submit">Skicka in svar</button>
-              </form>
-            </SurveyOutput>
-          </Survey>
-        ) : (
-          <Message>
-          <h1>Du har inga fler enkäter att besvara</h1>
-          </Message>
-        )}
-        {loading ? <Loading>Website is loading..</Loading> : null}
-
-=======
           <div>
             <PieChartClass currentSurveyId = {this.state.currentSurveyId}> </PieChartClass>
             <Survey>
@@ -260,10 +190,10 @@ class UserSurvey extends Component {
             </Survey>
           </div>
         ) : (
-            null
+          <Message>
+          <h1>Du har inga fler enkäter att besvara</h1>
+          </Message>
         )}
-        {loading ? <Loading>Website is loading..</Loading> : null}
->>>>>>> pie chart integrated in user-servey
       </div>
     );
   }
