@@ -7,9 +7,10 @@ export const SurveyOutput = styled.div`
   align-items: center;
   width: 100%;
   min-height: calc(100vh - 60px);
-  width: 100%;
   margin: 0;
   flex-direction: column;
+  text-align: center;
+  cursor: pointer;
 
   form {
     display: flex;
@@ -18,11 +19,24 @@ export const SurveyOutput = styled.div`
     align-content: center;
     flex-direction: column;
     width: 80%;
+    height:100%;
 
 h1 {
   padding: 20px 0 0;
 }
+
+
+
   }
+
+  output {
+  color: white;
+  background-color:var(--text-color);
+  border: 1px solid transparent;
+  font-weight: bold;
+  }
+
+  
 
   select {
     width: 100%;
@@ -45,6 +59,8 @@ h1 {
     height: 26px;
     -webkit-appearance: none;
     width: 100%;
+    background: transparent;
+    padding:50px;
     }
 
   input[type=range]:focus {
@@ -56,7 +72,7 @@ h1 {
     cursor: pointer;
     animate: 0.2s;
     box-shadow: 0px 0px 0px #000000;
-    background: var(--text-color);
+    background: linear-gradient(to right, red,yellow,limegreen);
     border-radius: 25px;
     border: 0px solid #000101;
   }
@@ -66,7 +82,7 @@ h1 {
     height: 20px;
     width: 35px;
     border-radius: 7px;
-    background: var(--menu-color);
+    background: var(--text-color);
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -3.5px;
@@ -136,9 +152,10 @@ h1 {
 	  border-radius: 5px;
     height: 100px;
 	  width: 80%;
-    padding: 4px 0px 0px 4px;
+    padding:40px;
     font-size: 16px;
     resize: none;
+  
   }
 
 label {
