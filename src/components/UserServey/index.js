@@ -5,7 +5,6 @@ import { withFirebase } from "../Firebase";
 import { Success, Loading } from "../../styles/GlobalStyle";
 import styled from "styled-components";
 import { SurveyOutput, Message } from "./styles";
-import PieChartClass from "../PieChartClass";
 
 const Survey = styled.div`
   width: 100%;
@@ -27,7 +26,7 @@ class UserSurvey extends Component {
       sliderTwoAnsw: 5,
       sliderThreeAnsw: 5,
       currentSurveyId: null,
-        };
+    };
   }
 
   componentDidMount() {
@@ -87,8 +86,8 @@ class UserSurvey extends Component {
         sliderOneAnswers: sliderOneAnsw,
         sliderTwoAnswers: sliderTwoAnsw,
         sliderThreeAnswers: sliderThreeAnsw,
-        questionOneAnswers: questionOneAnsw,
-        questionTwoAnswers: questionTwoAnsw
+        questionOneAnswers: questionOneAnsw ? questionOneAnsw : null,
+        questionTwoAnswers: questionTwoAnsw ? questionTwoAnsw : null
       });
 
     this.props.firebase.survey(this.state.currentSurveyId).child("answeredUsers").update({ [this.props.authUser.uid]: true });
@@ -110,8 +109,6 @@ class UserSurvey extends Component {
   }
 
   render() {
-    const isInvalid =
-      sliderOneAnsw === "" || sliderTwoAnsw === "" || sliderThreeAnsw === "";
     const {
       loading,
       success,
@@ -128,7 +125,6 @@ class UserSurvey extends Component {
         {success ? <Success>Utvärderingen har lämnats!</Success> : null}
         {notAnsweredSurvey ? (
           <div>
-            <PieChartClass currentSurveyId = {this.state.currentSurveyId}> </PieChartClass>
             <Survey>
               <SurveyOutput>
                 <form onSubmit={event => this.onSubmit(event)}>
@@ -179,9 +175,7 @@ class UserSurvey extends Component {
                     type="text"
                     placeholder="svar..."
                   />
-                  {isInvalid ?
                   <button type="submit">Skicka in svar</button>
-                  : null}
                 </form>
               </SurveyOutput>
             </Survey>
