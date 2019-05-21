@@ -27,10 +27,7 @@ class UserSurvey extends Component {
       sliderTwoAnsw: 5,
       sliderThreeAnsw: 5,
       currentSurveyId: null,
-      sliderOneAnsw: 0,
-      sliderTwoAnsw: 0,
-      sliderThreeAnsw: 0
-    };
+        };
   }
 
   componentDidMount() {
