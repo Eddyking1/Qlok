@@ -132,7 +132,6 @@ h1 {
   }
 
   textarea {
-
     border: 1px;
 	  border-radius: 5px;
     height: 100px;
