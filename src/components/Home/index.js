@@ -33,7 +33,7 @@ class HomePage extends Component {
   // }
 
   componentDidMount() {
-    this.checkIfuserGotSurveys();
+    // this.checkIfuserGotSurveys();
   }
 
   componentWillUnmount() {

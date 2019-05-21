@@ -6,21 +6,12 @@ import { Success, Loading } from "../../styles/GlobalStyle";
 import styled from "styled-components";
 import { SurveyOutput, Message } from "./styles";
 
-const OutputDiv = styled.div`
-	border-radius: 10px;
-	border: 10px solid ;
-  margin: 5px;
-  padding:0;
-`;
-
-const FormSectionOne = styled.div `
-  width:90%;
-`;
-
-const FormSectionTwo = styled.div `
-  width:90%;
-
-`;
+// const OutputDiv = styled.div`
+// 	border-radius: 10px;
+// 	border: 10px solid ;
+//   margin: 5px;
+//   padding:0;
+// `;
 
 class UserSurvey extends Component {
   constructor(props) {
@@ -134,74 +125,64 @@ class UserSurvey extends Component {
         {success ? <Success>Utvärderingen har lämnats!</Success> : null}
         {notAnsweredSurvey ? (
           <div>
-<<<<<<< HEAD
-            <Survey>
-=======
->>>>>>> changed some styling for user-survey
               <SurveyOutput>
                 <form onSubmit={event => this.onSubmit(event)}>
-                <FormSectionOne>
                   <h1>Enkät - {notAnsweredSurvey.education} - {notAnsweredSurvey.week}</h1>
-                  <label>{notAnsweredSurvey.sliderOne}</label>
-                  <input
-                    name="sliderOneAnsw"
-                    value={sliderOneAnsw}
-                    onChange={this.onChange}
-                    type="range"
-                    min="0"
-                    max="10"
-                    step="1"
-                  />
-                <OutputDiv>  <output  >{sliderOneAnsw}</output> </OutputDiv>
-              
-                  <label>{notAnsweredSurvey.sliderTwo}</label>
-                  <input
-                    name="sliderTwoAnsw"
-                    value={sliderTwoAnsw}
-                    onChange={this.onChange}
-                    type="range"
-                    min="0"
-                    max="10"
-                    step="1"
-                  />
-                 <OutputDiv> <output  >{sliderTwoAnsw}</output> </OutputDiv>
+                  <div>
+                    <label>{notAnsweredSurvey.sliderOne}</label>
+                    <input
+                      name="sliderOneAnsw"
+                      value={sliderOneAnsw}
+                      onChange={this.onChange}
+                      type="range"
+                      min="0"
+                      max="10"
+                      step="1"
+                    />
+                    <output  >{sliderOneAnsw}</output>
 
-                  <label>{notAnsweredSurvey.sliderThree}</label>
-                  <input
-                    name="sliderThreeAnsw"
-                    value={sliderThreeAnsw}
-                    onChange={this.onChange}
-                    type="range"
-                    min="0"
-                    max="10"
-                    step="1"
-                   />
-                  <OutputDiv> <output>{sliderThreeAnsw}</output></OutputDiv>
-                  </FormSectionOne>
+                    <label>{notAnsweredSurvey.sliderTwo}</label>
+                    <input
+                      name="sliderTwoAnsw"
+                      value={sliderTwoAnsw}
+                      onChange={this.onChange}
+                      type="range"
+                      min="0"
+                      max="10"
+                      step="1"
+                    />
+                    <output  >{sliderTwoAnsw}</output>
 
-                  <FormSectionTwo> 
-                  <label>{notAnsweredSurvey.questionOne}</label>
-                  <textarea
-                    name="questionOneAnsw"
-                    value={questionOneAnsw}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="svar..."
-                  />
-                  <label>{notAnsweredSurvey.questionTwo}</label>
-                  <textarea
-                    name="questionTwoAnsw"
-                    value={questionTwoAnsw}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="svar..."
-                  />
-<<<<<<< HEAD
-=======
-                  </FormSectionTwo> 
-
-                  {isInvalid ?
->>>>>>> changed some styling for user-survey
+                    <label>{notAnsweredSurvey.sliderThree}</label>
+                    <input
+                      name="sliderThreeAnsw"
+                      value={sliderThreeAnsw}
+                      onChange={this.onChange}
+                      type="range"
+                      min="0"
+                      max="10"
+                      step="1"
+                     />
+                    <output>{sliderThreeAnsw}</output>
+                  </div>
+                  <div>
+                    <label>{notAnsweredSurvey.questionOne}</label>
+                    <textarea
+                      name="questionOneAnsw"
+                      value={questionOneAnsw}
+                      onChange={this.onChange}
+                      type="text"
+                      placeholder="svar..."
+                    />
+                    <label>{notAnsweredSurvey.questionTwo}</label>
+                    <textarea
+                      name="questionTwoAnsw"
+                      value={questionTwoAnsw}
+                      onChange={this.onChange}
+                      type="text"
+                      placeholder="svar..."
+                    />
+                  </div>
                   <button type="submit">Skicka in svar</button>
                 </form>
               </SurveyOutput>

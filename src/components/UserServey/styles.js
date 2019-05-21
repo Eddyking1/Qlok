@@ -18,25 +18,58 @@ export const SurveyOutput = styled.div`
     align-items: center;
     align-content: center;
     flex-direction: column;
-    width: 80%;
-    height:100%;
+    width: 60%;
 
-h1 {
-  padding: 20px 0 0;
+    div {
+      width: 100%;
+      background: white;
+      padding: 50px 20px;
+      margin: 15px 0;
+      border-radius: 10px;
+      font-size: 24px;
+
+      label {
+        font-weight: 500;
+        width: 100%;
+        display: block;
+        margin: 0;
+        padding: 40px 0;
+      }
+
+      input {
+        padding: 0 0 5px;
+        width: 100%;
+      }
+
+      output {
+        color: white;
+        background-color:var(--text-color);
+        padding: 5px;
+        border-radius: 0 0 10px 10px;
+        border: 1px solid transparent;
+        font-weight: bold;
+      }
+
+      textarea {
+        margin: 20px 0;
+        background-color: var(--menu-color);
+        width: 100%;
+        padding: 10px;
+        font-size: 22px;
+        border-radius: 10px;
+      }
+    }
+
+  h1 {
+    padding: 30px 20px 20px;
+  }
 }
 
-
-
+@media (max-width: 600px) {
+    form {
+      width: 100%;
+    }
   }
-
-  output {
-  color: white;
-  background-color:var(--text-color);
-  border: 1px solid transparent;
-  font-weight: bold;
-  }
-
-  
 
   select {
     width: 100%;
@@ -60,7 +93,6 @@ h1 {
     -webkit-appearance: none;
     width: 100%;
     background: transparent;
-    padding:50px;
     }
 
   input[type=range]:focus {
@@ -86,9 +118,6 @@ h1 {
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -3.5px;
-  }
-  input[type=range]:focus::-webkit-slider-runnable-track {
-    background: var(--text-color);
   }
   input[type=range]::-moz-range-track {
     width: 100%;
@@ -155,7 +184,7 @@ h1 {
     padding:40px;
     font-size: 16px;
     resize: none;
-  
+
   }
 
 label {
