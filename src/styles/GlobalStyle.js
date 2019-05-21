@@ -59,6 +59,12 @@ const Success = styled.div`
   top: 50px;
   bottom: 0;
   animation: ${LoadingKeyframe} 0.4s ease-in;
+
+  @media (max-width: 600px) {
+      width: 100%;
+      font-size:2em;
+    }
+
 `;
 const Loading = styled.div`
   width: 100%;
@@ -74,6 +80,12 @@ const Loading = styled.div`
   top: 50px;
   bottom: 0;
   animation: ${LoadingKeyframe} 0.8s infinite ease-in-out;
+
+  @media (max-width: 600px) {
+      width: 100%;
+      font-size:2em;
+    }
+
 `;
 
 const PieChartCont = styled.div`
