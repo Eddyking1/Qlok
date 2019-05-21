@@ -4,6 +4,7 @@ import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import UserServey from "../UserServey";
 import { Loading } from "../../styles/GlobalStyle";
+import qlok from "../../assets/qlok.png"
 
 
 class HomePage extends Component {
@@ -33,6 +34,7 @@ class HomePage extends Component {
   // }
 
   componentDidMount() {
+    
     // this.checkIfuserGotSurveys();
   }
 
@@ -49,7 +51,7 @@ class HomePage extends Component {
             <UserServey/>
           </div>
         ) : (
-          <Loading>Website is loading.. </Loading>
+          <Loading><img src={qlok}></img></Loading>
         )}
       </div>
     );

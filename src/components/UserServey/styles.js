@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {SurveyKeyFrame} from '../../styles/Keyframes'
 
 export const SurveyOutput = styled.div`
   display: flex;
@@ -19,14 +20,17 @@ export const SurveyOutput = styled.div`
     align-content: center;
     flex-direction: column;
     width: 60%;
+    padding: 20px 0;
 
     div {
       width: 100%;
       background: white;
-      padding: 50px 20px;
-      margin: 15px 0;
+      padding: 0px 20px 50px;
+      margin: 20px 0;
       border-radius: 10px;
       font-size: 24px;
+      animation: ${SurveyKeyFrame} 0.8s;
+
 
       label {
         font-weight: 500;
@@ -58,6 +62,11 @@ export const SurveyOutput = styled.div`
         font-size: 22px;
         border-radius: 10px;
       }
+    }
+
+    button {
+      font-size: 2em;
+      margin: 35px 0;
     }
 
   h1 {

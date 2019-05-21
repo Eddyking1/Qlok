@@ -67,19 +67,25 @@ const Success = styled.div`
 
 `;
 const Loading = styled.div`
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+
+
   padding: 30px 0;
-  vertical-align: middle;
-  max-height: 100px;
   background: var(--text-color);
-  color: #fcfaf5;
-  font-size: 3em;
-  font-weight: bold;
-  text-align: center;
   position: absolute;
   top: 50px;
   bottom: 0;
-  animation: ${LoadingKeyframe} 0.8s infinite ease-in-out;
+
+  img {
+    width: 200px;
+    animation: ${LoadingKeyframe} 1s infinite ease-in-out;
+  }
 
   @media (max-width: 600px) {
       width: 100%;
