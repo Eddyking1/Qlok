@@ -5,13 +5,8 @@ import { withFirebase } from "../Firebase";
 import { Success, Loading } from "../../styles/GlobalStyle";
 import styled from "styled-components";
 import { SurveyOutput, Message } from "./styles";
+import qlok from "../../assets/qlok.png"
 
-// const OutputDiv = styled.div`
-// 	border-radius: 10px;
-// 	border: 10px solid ;
-//   margin: 5px;
-//   padding:0;
-// `;
 
 class UserSurvey extends Component {
   constructor(props) {
@@ -30,11 +25,11 @@ class UserSurvey extends Component {
   }
 
   componentDidMount() {
+    this.setState({loading: true});
     this.getInvitedToSurveys();
   }
 
   getInvitedToSurveys = () => {
-    this.setState({loading: true});
     this.props.firebase.user(this.props.authUser.uid).child("invitedTo").on("value", snapshot => {
       const userSurveys = snapshot.val();
       if(userSurveys) {
@@ -42,7 +37,7 @@ class UserSurvey extends Component {
           ...userSurveys[key],
           uid: key
         }));
-        this.setState({invitedToSurveys: invitedToSurveys, loading: false}, () => {
+        this.setState({invitedToSurveys: invitedToSurveys}, () => {
           this.filterSurveys();
         })
       }
@@ -56,7 +51,8 @@ class UserSurvey extends Component {
       if(notAnsweredSurvey) {
         this.setState({
           notAnsweredSurvey: notAnsweredSurvey,
-          currentSurveyId: this.state.invitedToSurveys[0].uid
+          currentSurveyId: this.state.invitedToSurveys[0].uid,
+          loading: false
         });
       }
     })
@@ -121,9 +117,9 @@ class UserSurvey extends Component {
     } = this.state;
 
     return (
+
       <div>
-        {success ? <Success>Utvärderingen har lämnats!</Success> : null}
-        {notAnsweredSurvey ? (
+        {!loading && notAnsweredSurvey ? (
           <div>
               <SurveyOutput>
                 <form onSubmit={event => this.onSubmit(event)}>
@@ -187,11 +183,10 @@ class UserSurvey extends Component {
                 </form>
               </SurveyOutput>
           </div>
-        ) : (
-          <Message>
-          <h1>Du har inga fler enkäter att besvara</h1>
-          </Message>
-        )}
+        ) :
+           <Loading><img src={qlok}></img></Loading> }
+        {!notAnsweredSurvey ? <Message> <h1>Du har inga fler enkäter att besvara</h1></Message> : null};
+        {success ? <Success>Utvärderingen har lämnats!</Success> : null}
       </div>
     );
   }

@@ -2,6 +2,22 @@ import { keyframes } from 'styled-components';
 
 export const LoadingKeyframe = keyframes`
    0% {
+     transform: rotate(0deg) translateX(0);
+     width: 0;
+   }
+   50% {
+     transform: rotate(360deg) translateX(0);
+     width: 300px;
+   }
+
+   100% {
+     transform: rotate(-360deg) translateX(0);
+     width: 0px;
+   }
+`;
+
+export const SurveyKeyFrame = keyframes`
+   0% {
      opacity: 0;
    }
    100% {
