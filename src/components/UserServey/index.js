@@ -6,11 +6,20 @@ import { Success, Loading } from "../../styles/GlobalStyle";
 import styled from "styled-components";
 import { SurveyOutput, Message } from "./styles";
 
-const Survey = styled.div`
-  width: 100%;
-  height: 40%;
-  text-align: center;
-  cursor: pointer;
+const OutputDiv = styled.div`
+	border-radius: 10px;
+	border: 10px solid ;
+  margin: 5px;
+  padding:0;
+`;
+
+const FormSectionOne = styled.div `
+  width:90%;
+`;
+
+const FormSectionTwo = styled.div `
+  width:90%;
+
 `;
 
 class UserSurvey extends Component {
@@ -125,9 +134,13 @@ class UserSurvey extends Component {
         {success ? <Success>Utvärderingen har lämnats!</Success> : null}
         {notAnsweredSurvey ? (
           <div>
+<<<<<<< HEAD
             <Survey>
+=======
+>>>>>>> changed some styling for user-survey
               <SurveyOutput>
                 <form onSubmit={event => this.onSubmit(event)}>
+                <FormSectionOne>
                   <h1>Enkät - {notAnsweredSurvey.education} - {notAnsweredSurvey.week}</h1>
                   <label>{notAnsweredSurvey.sliderOne}</label>
                   <input
@@ -139,6 +152,8 @@ class UserSurvey extends Component {
                     max="10"
                     step="1"
                   />
+                <OutputDiv>  <output  >{sliderOneAnsw}</output> </OutputDiv>
+              
                   <label>{notAnsweredSurvey.sliderTwo}</label>
                   <input
                     name="sliderTwoAnsw"
@@ -149,6 +164,8 @@ class UserSurvey extends Component {
                     max="10"
                     step="1"
                   />
+                 <OutputDiv> <output  >{sliderTwoAnsw}</output> </OutputDiv>
+
                   <label>{notAnsweredSurvey.sliderThree}</label>
                   <input
                     name="sliderThreeAnsw"
@@ -158,7 +175,11 @@ class UserSurvey extends Component {
                     min="0"
                     max="10"
                     step="1"
-                  />
+                   />
+                  <OutputDiv> <output>{sliderThreeAnsw}</output></OutputDiv>
+                  </FormSectionOne>
+
+                  <FormSectionTwo> 
                   <label>{notAnsweredSurvey.questionOne}</label>
                   <textarea
                     name="questionOneAnsw"
@@ -175,10 +196,15 @@ class UserSurvey extends Component {
                     type="text"
                     placeholder="svar..."
                   />
+<<<<<<< HEAD
+=======
+                  </FormSectionTwo> 
+
+                  {isInvalid ?
+>>>>>>> changed some styling for user-survey
                   <button type="submit">Skicka in svar</button>
                 </form>
               </SurveyOutput>
-            </Survey>
           </div>
         ) : (
           <Message>
