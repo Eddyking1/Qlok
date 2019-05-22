@@ -21,6 +21,9 @@ class UserSurvey extends Component {
       sliderOneAnsw: 5,
       sliderTwoAnsw: 5,
       sliderThreeAnsw: 5,
+      questionOneAnsw: "",
+      questionTwoAnsw: "",
+
       currentSurveyId: null,
     };
   }
@@ -38,10 +41,13 @@ class UserSurvey extends Component {
           ...userSurveys[key],
           uid: key
         }));
+
         this.setState({invitedToSurveys: invitedToSurveys}, () => {
-          this.filterSurveys();
-        })
-      }
+        this.filterSurveys();
+      });
+    } else {
+      this.setState({notAnsweredSurvey: null, loading: false});
+    }
     })
   }
 
@@ -92,13 +98,21 @@ class UserSurvey extends Component {
     this.props.firebase.user(this.props.authUser.uid).child("answeredSurveys").update({ [this.state.currentSurveyId]: true });
     this.props.firebase.user(this.props.authUser.uid).child("invitedTo").update({[this.state.currentSurveyId]: null});
     this.setSuccess();
-    this.getInvitedToSurveys();
   };
 
   setSuccess = () => {
     setTimeout(
       function() {
-          this.setState({success: false});
+          this.setState({
+            success: false,
+            loading: false,
+            sliderOneAnsw: 5,
+            sliderTwoAnsw: 5,
+            sliderThreeAnsw: 5,
+            questionOneAnsw: "",
+            questionTwoAnsw: "",
+          });
+          this.getInvitedToSurveys();
       }
       .bind(this),
       1000
