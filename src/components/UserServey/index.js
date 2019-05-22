@@ -87,12 +87,12 @@ class UserSurvey extends Component {
         questionTwoAnswers: questionTwoAnsw ? questionTwoAnsw : null
       });
 
-
     this.props.firebase.survey(this.state.currentSurveyId).child("answeredUsers").update({ [this.props.authUser.uid]: true });
     this.props.firebase.survey(this.state.currentSurveyId).child("invitedTo").update({[this.props.authUser.uid]: null});
     this.props.firebase.user(this.props.authUser.uid).child("answeredSurveys").update({ [this.state.currentSurveyId]: true });
     this.props.firebase.user(this.props.authUser.uid).child("invitedTo").update({[this.state.currentSurveyId]: null});
     this.setSuccess();
+    this.getInvitedToSurveys();
   };
 
   setSuccess = () => {
@@ -130,8 +130,9 @@ class UserSurvey extends Component {
 
       <div>
         {success ? <Success><img src={check} alt="success-check-mark"/></Success> : <div>
-        {!loading && notAnsweredSurvey ? (
+        {!loading ? (
           <div>
+            {notAnsweredSurvey ?
               <SurveyOutput>
                 <form onSubmit={event => this.onSubmit(event)}>
                   <h1>Enkät - {notAnsweredSurvey.education} - {notAnsweredSurvey.week}</h1>
@@ -192,12 +193,12 @@ class UserSurvey extends Component {
                   </div>
                   <button type="submit">Skicka in svar</button>
                 </form>
-              </SurveyOutput>
+              </SurveyOutput> : <h1>Du har inga fler enkäter att besvara</h1>}
           </div>
         ) :
            <Loading><img src={qlok} alt="qlok-spinner" /></Loading> }
-        {!notAnsweredSurvey ? <Message> <h1>Du har inga fler enkäter att besvara</h1></Message> : null};
-        : </div>}
+        {!notAnsweredSurvey ? <Message> <h1>Du har inga fler enkäter att besvara</h1></Message> : null}
+        </div>}
       </div>
     );
   }
