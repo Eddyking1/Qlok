@@ -3,6 +3,8 @@ import { compose } from "recompose";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import { FormStyle, Success, Loading } from "../../styles/GlobalStyle";
+import qlok from "../../assets/qlok.png"
+import check from "../../assets/check.png"
 
 class CreateSurvey extends Component {
   constructor(props) {
@@ -25,12 +27,12 @@ class CreateSurvey extends Component {
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
     this.getCurrentEducation();
     this.loadSurveysFromDB();
   }
 
   getCurrentEducation = () => {
-    this.setState({ loading: true });
     this.props.firebase
       .user(this.props.authUser.uid)
       .once("value", snapshot => {
@@ -49,10 +51,8 @@ class CreateSurvey extends Component {
     this.props.firebase.education(this.state.currentEducation).child("participants").on("value", snapshot => {
       let participants = snapshot.val();
       if(participants) {
-        this.setState({participants: Object.keys(participants), loading: false});
+        this.setState({participants: Object.keys(participants)});
       }
-      console.log(this.state.participants);
-
     });
   }
 
@@ -81,7 +81,6 @@ class CreateSurvey extends Component {
       sliderThree,
       questionOne,
       questionTwo,
-      currentEdcStudents,
       currentEducation,
       week
     } = this.state;
@@ -99,16 +98,23 @@ class CreateSurvey extends Component {
      const key = snap.key
      this.pushSurveyToParticipants(key);
      this.pushParticipantsToSurvey(key);
+     this.setSuccess();
     });
     event.preventDefault();
   };
 
+  setSuccess = () => {
+    setTimeout(
+      function() {
+          this.setState({success: false});
+      }
+      .bind(this),
+      1000
+    );
+  }
+
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
-    this.setState({
-      success: false
-    });
-    console.log(this.state.week);
   };
 
   loadSurveysFromDB = () => {
@@ -122,20 +128,20 @@ class CreateSurvey extends Component {
 
         this.setState(
           {
-            surveys: surveyList
+            surveys: surveyList,
+            loading: false
+
           },
           () => {
             this.keepTypedValue();
           }
         );
       }
-      console.log(this.state);
     });
   };
 
   keepTypedValue = () => {
     const listLength = this.state.surveys.length;
-    console.log(listLength);
     const survei = this.state.surveys;
     this.setState({
       placeholders: [
@@ -167,7 +173,8 @@ class CreateSurvey extends Component {
       questionTwo,
       week,
       surveys,
-      success
+      success,
+      loading
     } = this.state;
 
     const isInvalid =
@@ -175,67 +182,65 @@ class CreateSurvey extends Component {
 
     return (
       <div>
-        {success && surveys ? (
-          <Success>Utvärderingen har skickats!</Success>
-        ) : null}
-        {!this.state.loading ? (
-
-          <FormStyle fullWidth>
-            <h1>Skapa nytt formulär</h1>
-            <form onSubmit={this.onSubmit}>
-              <input
-                type="week"
-                name="week"
-                id="camp-week"
-                min="2019-W1"
-                max="2019-W52"
-                value={week}
-                onChange={this.onChange}
-                required
-              />
-              <input
-                name="sliderOne"
-                value={sliderOne}
-                onChange={this.onChange}
-                type="text"
-                placeholder={this.state.placeholders[0]}
-              />
-              <input
-                name="sliderTwo"
-                value={sliderTwo}
-                onChange={this.onChange}
-                type="text"
-                placeholder={this.state.placeholders[1]}
-              />
-              <input
-                name="sliderThree"
-                value={sliderThree}
-                onChange={this.onChange}
-                type="text"
-                placeholder={this.state.placeholders[2]}
-              />
-              <input
-                name="questionOne"
-                value={questionOne}
-                onChange={this.onChange}
-                type="text"
-                placeholder={this.state.placeholders[3]}
-              />
-              <input
-                name="questionTwo"
-                value={questionTwo}
-                onChange={this.onChange}
-                type="text"
-                placeholder={this.state.placeholders[4]}
-              />
-              <button disabled={isInvalid} type="submit">
-                Skicka ut formulär
-              </button>
-            </form>
-          </FormStyle>
-        ) : (
-          <Loading>Website is loading..</Loading>
-        )}
+        {success ? <Success><img src={check} alt="success-check-mark"/></Success> : <div>
+          {!loading && surveys ? (
+            <FormStyle fullWidth>
+              <h1>Skapa nytt formulär</h1>
+              <form onSubmit={this.onSubmit}>
+                <input
+                  type="week"
+                  name="week"
+                  id="camp-week"
+                  min="2019-W1"
+                  max="2019-W52"
+                  value={week}
+                  onChange={this.onChange}
+                  required
+                />
+                <input
+                  name="sliderOne"
+                  value={sliderOne}
+                  onChange={this.onChange}
+                  type="text"
+                  placeholder={this.state.placeholders[0]}
+                />
+                <input
+                  name="sliderTwo"
+                  value={sliderTwo}
+                  onChange={this.onChange}
+                  type="text"
+                  placeholder={this.state.placeholders[1]}
+                />
+                <input
+                  name="sliderThree"
+                  value={sliderThree}
+                  onChange={this.onChange}
+                  type="text"
+                  placeholder={this.state.placeholders[2]}
+                />
+                <input
+                  name="questionOne"
+                  value={questionOne}
+                  onChange={this.onChange}
+                  type="text"
+                  placeholder={this.state.placeholders[3]}
+                />
+                <input
+                  name="questionTwo"
+                  value={questionTwo}
+                  onChange={this.onChange}
+                  type="text"
+                  placeholder={this.state.placeholders[4]}
+                />
+                <button disabled={isInvalid} type="submit">
+                  Skicka ut formulär
+                </button>
+              </form>
+            </FormStyle>
+          ) : (
+            <Loading><img src={qlok} alt="qlok-spinner"/></Loading>
+          )}
+        : </div>}
       </div>
     );
   }

@@ -9,7 +9,6 @@ import HomePage from "../Home";
 import AccountPage from "../Account";
 import AdminPage from "../Admin";
 import CreateSurveyPage from "../CreateSurvey";
-import GraphPage from "../Graph";
 
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";

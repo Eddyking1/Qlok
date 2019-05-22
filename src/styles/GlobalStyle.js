@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
-import { LoadingKeyframe } from "./Keyframes";
+import { LoadingKeyframe, SurveyKeyFrame } from "./Keyframes";
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -45,27 +45,52 @@ const GlobalStyle = createGlobalStyle`
     margin: 30px 60px;
   }
 `;
+// const Success = styled.div`
+//   width: 100%;
+//   padding: 30px 0;
+//   vertical-align: middle;
+//   max-height: 100px;
+//   background: #4bb543;
+//   color: white;
+//   font-size: 3em;
+//   font-weight: bold;
+//   text-align: center;
+//   position: absolute;
+//   top: 50px;
+//   bottom: 0;
+//   animation: ${LoadingKeyframe} 0.4s ease-in;
+//
+//   @media (max-width: 600px) {
+//       width: 100%;
+//       font-size:2em;
+//     }
+//
+// `;
+
+
 const Success = styled.div`
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
   padding: 30px 0;
-  vertical-align: middle;
-  max-height: 100px;
-  background: #4bb543;
-  color: white;
-  font-size: 3em;
-  font-weight: bold;
-  text-align: center;
+  background: #9ee49a;
   position: absolute;
   top: 50px;
   bottom: 0;
-  animation: ${LoadingKeyframe} 0.4s ease-in;
+  animation: ${SurveyKeyFrame} 1s infinite ease-in-out;
+  animation-iteration-count: 1;
 
-  @media (max-width: 600px) {
-      width: 100%;
-      font-size:2em;
-    }
-
+  img {
+    width: 200px;
+  }
 `;
+
+
 const Loading = styled.div`
   width: 100vw;
   height: 100vh;
@@ -86,12 +111,6 @@ const Loading = styled.div`
     width: 200px;
     animation: ${LoadingKeyframe} 1s infinite ease-in-out;
   }
-
-  @media (max-width: 600px) {
-      width: 100%;
-      font-size:2em;
-    }
-
 `;
 
 const PieChartCont = styled.div`
