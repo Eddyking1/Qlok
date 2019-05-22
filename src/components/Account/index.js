@@ -7,8 +7,13 @@ import styled from 'styled-components';
 const AccountEmail = styled.h1`
     text-align: center;
     background-color: var(--text-color);
-    padding: 1em 0;
+    padding: .8em 0;
     color: var(--background-color);
+
+    @media (max-width: 600px) {
+        width: 100%;
+        font-size:1.3em;
+      }
 `;
 
 const AccountForm = styled.div`
@@ -16,8 +21,10 @@ const AccountForm = styled.div`
     align-items: center;
     align-content: center;
     justify-content: center;
-    padding: 50px;
+    padding: 50px 0;
     flex-direction: column;
+
+
 
     form {
       display: flex;
@@ -25,7 +32,16 @@ const AccountForm = styled.div`
       align-items:center;
       align-content:center;
       flex-direction: column;
-      padding: 30px;
+      /* padding: 30px; */
+
+
+      h1 {
+        padding: 0 0 20px;
+
+        @media (max-width: 600px) {
+            font-size:1.7em;
+          }
+      }
 
       h2 {
         text-align: center;
@@ -45,11 +61,20 @@ const AccountForm = styled.div`
         outline: none;
         transition: transform 0.3s ease-in-out;
         width: 100%;
+        border-radius: 10px;
       }
 
       button {
-        padding: 1.3em 1.3em;
+        margin: 20px 0 0;
+        padding: .8em;
         font-size: 1.5em;
+        background: var(--text-color);
+        color: white;
+        border-radius: 10px;
+
+        &:disabled {
+          opacity: .4;
+        }
       }
     }
 `;

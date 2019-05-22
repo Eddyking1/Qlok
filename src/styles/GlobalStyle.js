@@ -221,6 +221,11 @@ const FormStyle = styled.div`
     height: 2em;
     text-align: center;
     padding: 15px 0 0;
+
+    @media (max-width: 600px) {
+        font-size:1em;
+      }
+
   }
 
   p {
