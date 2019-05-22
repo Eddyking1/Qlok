@@ -47,7 +47,7 @@ class PasswordChangeForm extends Component {
           value={passwordOne}
           onChange={this.onChange}
           type="password"
-          placeholder="Nytt Lösenord"
+          placeholder="Nytt lösenord"
         />
         <input
           name="passwordTwo"
