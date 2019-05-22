@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {SurveyKeyFrame} from '../../styles/Keyframes'
+import {SurveyKeyFrame} from '../../styles/Keyframes';
 
 export const SurveyOutput = styled.div`
   display: flex;
@@ -248,14 +248,14 @@ label {
 `;
 
 export const Message = styled.div`
-display: flex;
-align-content: center;
-justify-content: center;
-align-items: center;
+text-align: center;
+background-color: var(--text-color);
+padding: .8em 0;
+color: var(--background-color);
+font-size:1.3em;
 
-h1 {
-  text-align: center;
-  padding: 30px 0 0;
-}
-
+@media (max-width: 600px) {
+    width: 100%;
+    font-size:.8em;
+  }
 `;

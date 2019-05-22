@@ -45,28 +45,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 30px 60px;
   }
 `;
-// const Success = styled.div`
-//   width: 100%;
-//   padding: 30px 0;
-//   vertical-align: middle;
-//   max-height: 100px;
-//   background: #4bb543;
-//   color: white;
-//   font-size: 3em;
-//   font-weight: bold;
-//   text-align: center;
-//   position: absolute;
-//   top: 50px;
-//   bottom: 0;
-//   animation: ${LoadingKeyframe} 0.4s ease-in;
-//
-//   @media (max-width: 600px) {
-//       width: 100%;
-//       font-size:2em;
-//     }
-//
-// `;
-
 
 const Success = styled.div`
   width: 100vw;
@@ -129,9 +107,9 @@ const FormStyle = styled.div`
   width: 100%;
   min-height: calc(100vh - 60px);
   width: 100%;
-
   margin: 0;
   flex-direction: column;
+
   form {
     display: flex;
     justify-content: center;
@@ -139,6 +117,7 @@ const FormStyle = styled.div`
     align-content: center;
     flex-direction: column;
     width: ${props => (props.fullWidth ? "80%" : "")};
+    margin-top: 60px;
   }
   select {
     width: 100%;
@@ -160,8 +139,9 @@ const FormStyle = styled.div`
   }
 
   input {
-    font-size: 1.5em;
+    font-size: 1.1em;
     border: none;
+    border-radius:10px;
     background-image: none;
     background-color: --menu-color;
     -webkit-box-shadow: none;
@@ -198,15 +178,15 @@ const FormStyle = styled.div`
     outline-offset: 0px !important;
   }
   button {
-    padding: 0.5em 1.5em;
+    padding: 0.5em 1em;
     margin: 2em 0;
     border: none;
     outline: none;
     background: var(--text-color);
     color: white;
-    font-size: 2em;
+    font-size: 1.7em;
     font-weight: bold;
-    border-radius: 0.1em;
+    border-radius: 10px;
     transition: 0.3s;
     cursor: pointer;
     &:hover {
@@ -218,14 +198,11 @@ const FormStyle = styled.div`
     }
   }
   h1 {
-    height: 2em;
     text-align: center;
-    padding: 15px 0 0;
-
-    @media (max-width: 600px) {
-        font-size:1em;
-      }
-
+    background-color: var(--text-color);
+    padding: .8em 0;
+    color: var(--background-color);
+    width:100%;
   }
 
   p {

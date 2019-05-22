@@ -13,44 +13,48 @@ const AdminStyle = styled.div`
   min-height: calc(100vh - 60px);
   margin: 0;
   flex-direction: column;
+  padding: 20px 0;
 
   div {
+  width: 100%;
   display: flex;
   align-content: center;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align:center;
+  padding: 100px 0;
   }
 
   h1 {
-    font-size:3.5em;
-    padding:10px 0 ;
+    font-size:1.8em;
+    padding:30px 0 ;
+
+    span {
+      font-size: 2em;
+    }
   }
 
   h2 {
-    padding: 0 ;
+    background: white;
+    padding: 20px 20px;
+    border-radius: 10px;
   }
 
   a {
     font-size:2em;
+    font-weight:bold;
     all:unset;
-  }
-
-  li {
-    padding:50px;
+    cursor: pointer;
   }
 
   button {
-    padding: 0.5em 1.5em;
-    margin: 1em 0;
-    border: none;
-    outline: none;
+    margin: 35px 0 0;
+    padding: .8em;
+    font-size: 1.5em;
     background: var(--text-color);
     color: white;
-    font-size: 2em;
-    font-weight: bold;
-    border-radius: 0.1em;
+    border-radius: 10px;
     transition: 0.3s;
     cursor: pointer;
 
@@ -66,8 +70,8 @@ const AdminStyle = styled.div`
 `;
 
 const UserEmail = styled.div `
-padding: 20px;
-font-size:1.5em;
+/* padding: 20px; */
+font-size:1.4em;
 font-weight:bold;
 background-color:white;
 border:none !important;
@@ -87,9 +91,8 @@ class AdminPage extends Component {
     return (
       <AdminStyle>
         <div>
-         <h1>Admin</h1>
-         <h1>Inloggad som:</h1>
-          {!loading ? <UserEmail> {this.props.authUser.email} </UserEmail> : <div>Loading ...</div>}
+         <h1><span>Admin</span> <br/> Inloggad som:</h1>
+          {!loading ? <h2> {this.props.authUser.email} </h2> : <div>Loading ...</div>}
 
           <button>
            <Link to={ROUTES.CREATE_SURVEY}>Skapa en ny enkät</Link>
