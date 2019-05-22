@@ -56,7 +56,7 @@ export const SurveyOutput = styled.div`
 
       textarea {
         margin: 20px 0;
-        background-color: var(--menu-color);
+        background-color: #fcfaf5;
         width: 100%;
         padding: 10px;
         font-size: 18px;
