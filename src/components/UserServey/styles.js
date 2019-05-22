@@ -59,7 +59,7 @@ export const SurveyOutput = styled.div`
         background-color: var(--menu-color);
         width: 100%;
         padding: 10px;
-        font-size: 22px;
+        font-size: 18px;
         border-radius: 10px;
       }
     }

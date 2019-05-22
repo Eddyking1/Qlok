@@ -3,9 +3,10 @@ import { compose } from "recompose";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import { Success, Loading } from "../../styles/GlobalStyle";
-import styled from "styled-components";
 import { SurveyOutput, Message } from "./styles";
 import qlok from "../../assets/qlok.png"
+import check from "../../assets/check.png"
+
 
 
 class UserSurvey extends Component {
@@ -86,17 +87,26 @@ class UserSurvey extends Component {
         questionTwoAnswers: questionTwoAnsw ? questionTwoAnsw : null
       });
 
+
     this.props.firebase.survey(this.state.currentSurveyId).child("answeredUsers").update({ [this.props.authUser.uid]: true });
     this.props.firebase.survey(this.state.currentSurveyId).child("invitedTo").update({[this.props.authUser.uid]: null});
     this.props.firebase.user(this.props.authUser.uid).child("answeredSurveys").update({ [this.state.currentSurveyId]: true });
     this.props.firebase.user(this.props.authUser.uid).child("invitedTo").update({[this.state.currentSurveyId]: null});
+    this.setSuccess();
   };
+
+  setSuccess = () => {
+    setTimeout(
+      function() {
+          this.setState({success: false});
+      }
+      .bind(this),
+      1000
+    );
+  }
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
-    this.setState({
-      success: false
-    });
   };
 
   componentWillUnmount() {
@@ -119,6 +129,7 @@ class UserSurvey extends Component {
     return (
 
       <div>
+        {success ? <Success><img src={check} alt="success-check-mark"/></Success> : <div>
         {!loading && notAnsweredSurvey ? (
           <div>
               <SurveyOutput>
@@ -184,9 +195,9 @@ class UserSurvey extends Component {
               </SurveyOutput>
           </div>
         ) :
-           <Loading><img src={qlok}></img></Loading> }
+           <Loading><img src={qlok} alt="qlok-spinner" /></Loading> }
         {!notAnsweredSurvey ? <Message> <h1>Du har inga fler enkäter att besvara</h1></Message> : null};
-        {success ? <Success>Utvärderingen har lämnats!</Success> : null}
+        : </div>}
       </div>
     );
   }
