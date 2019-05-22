@@ -26,11 +26,11 @@ class UserSurvey extends Component {
   }
 
   componentDidMount() {
-    this.setState({loading: true});
     this.getInvitedToSurveys();
   }
 
   getInvitedToSurveys = () => {
+    this.setState({loading: true});
     this.props.firebase.user(this.props.authUser.uid).child("invitedTo").on("value", snapshot => {
       const userSurveys = snapshot.val();
       if(userSurveys) {
@@ -193,11 +193,10 @@ class UserSurvey extends Component {
                   </div>
                   <button type="submit">Skicka in svar</button>
                 </form>
-              </SurveyOutput> : <h1>Du har inga fler enkäter att besvara</h1>}
+              </SurveyOutput> : <Message> <h1>Du har inga fler enkäter att besvara</h1></Message>}
           </div>
         ) :
            <Loading><img src={qlok} alt="qlok-spinner" /></Loading> }
-        {!notAnsweredSurvey ? <Message> <h1>Du har inga fler enkäter att besvara</h1></Message> : null}
         </div>}
       </div>
     );
