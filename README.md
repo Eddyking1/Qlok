@@ -1,6 +1,6 @@
-# Survey App - school Project
+# Evaluation App - School Project
 
-This Survey app is intended for schools, to in and easy and quick way be able to create and send out evaluations to their students in different classes. The students can easy and fast answer a short questionnaire.  
+Collect data fast with this evaluation app. This app is mainly intended for schools, an easy and quick way to create and send out surveys to students in different classes. Without any major effort, the students can quick and easy answer a short survey on their mobile.  
 
 This app will help schools to get faster feedback and they will be able to react faster if changes needs to be done. 
 
