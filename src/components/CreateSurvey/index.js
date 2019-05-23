@@ -162,6 +162,7 @@ class CreateSurvey extends Component {
 
   componentWillUnmount() {
     this.props.firebase.education().off();
+    this.props.firebase.surveys().off();
   }
 
   render() {
