@@ -3,11 +3,10 @@ import { compose } from "recompose";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import { Success, Loading } from "../../styles/GlobalStyle";
-import { SurveyOutput, Message } from "./styles";
+import { SurveyOutput, Message, ChartPage } from "./styles";
 import qlok from "../../assets/qlok.png"
 import check from "../../assets/check.png"
-
-
+import PieChartClass from "../PieChartClass"
 
 class UserSurvey extends Component {
   constructor(props) {
@@ -16,6 +15,7 @@ class UserSurvey extends Component {
     this.state = {
       loading: false,
       success: false,
+      showNext: false,
       notAnsweredSurvey: null,
       invitedToSurveys: null,
       sliderOneAnsw: 5,
@@ -23,13 +23,17 @@ class UserSurvey extends Component {
       sliderThreeAnsw: 5,
       questionOneAnsw: "",
       questionTwoAnsw: "",
-
       currentSurveyId: null,
     };
   }
 
   componentDidMount() {
     this.getInvitedToSurveys();
+  }
+
+  nextSurvey = (e) => {
+    e.preventDefault();
+    this.setState({showNext: !this.state.showNext})
   }
 
   getInvitedToSurveys = () => {
@@ -52,7 +56,6 @@ class UserSurvey extends Component {
   }
 
   filterSurveys = () => {
-    console.log(this.state.invitedToSurveys[0].uid);
     this.props.firebase.survey(this.state.invitedToSurveys[0].uid).on("value", snapshot => {
       const notAnsweredSurvey = snapshot.val();
       if(notAnsweredSurvey) {
@@ -111,8 +114,8 @@ class UserSurvey extends Component {
             sliderThreeAnsw: 5,
             questionOneAnsw: "",
             questionTwoAnsw: "",
+            showNext: false,
           });
-          this.getInvitedToSurveys();
       }
       .bind(this),
       1000
@@ -132,6 +135,7 @@ class UserSurvey extends Component {
     const {
       loading,
       success,
+      showNext,
       notAnsweredSurvey,
       sliderOneAnsw,
       sliderTwoAnsw,
@@ -146,7 +150,7 @@ class UserSurvey extends Component {
         {success ? <Success><img src={check} alt="success-check-mark"/></Success> : <div>
         {!loading ? (
           <div>
-            {notAnsweredSurvey ?
+          {showNext && notAnsweredSurvey ?
               <SurveyOutput>
                 <form onSubmit={event => this.onSubmit(event)}>
                   <h1>Enkät - {notAnsweredSurvey.education} - {notAnsweredSurvey.week}</h1>
@@ -207,7 +211,11 @@ class UserSurvey extends Component {
                   </div>
                   <button type="submit">Skicka in svar</button>
                 </form>
-              </SurveyOutput> : <Message> <h1>Du har inga fler enkäter att besvara</h1></Message>}
+              </SurveyOutput> :
+              <ChartPage>
+                  <PieChartClass currentSurveyId={this.state.currentSurveyId}/>
+                  <button disabled={!notAnsweredSurvey} onClick={event => this.nextSurvey(event)}>Nästa enkät</button>
+                </ChartPage>}
           </div>
         ) :
            <Loading><img src={qlok} alt="qlok-spinner" /></Loading> }

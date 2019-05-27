@@ -91,14 +91,6 @@ const Loading = styled.div`
   }
 `;
 
-const PieChartCont = styled.div`
-  margin: 0px;
-  svg {
-    margin-left: auto;
-    width: 100vw;
-  }
-`;
-
 const FormStyle = styled.div`
   display: flex;
   align-content: center;
@@ -211,4 +203,4 @@ const FormStyle = styled.div`
     font-size: 1.2em;
   }
 `;
-export { GlobalStyle, FormStyle, Success, Loading, PieChartCont };
+export { GlobalStyle, FormStyle, Success, Loading };

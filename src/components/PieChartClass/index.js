@@ -2,9 +2,25 @@ import React, { Component } from "react";
 import { compose } from "recompose";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
-import { PieChartCont } from "../../styles/GlobalStyle";
+// import { PieChartCont } from "../../styles/GlobalStyle";
+import styled from "styled-components";
+
 
 import { PieChart, Pie, Sector } from "recharts";
+
+const PieChartCont = styled.div`
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 100px 0 0px;
+  font-size: 20px;
+
+  @media(max-width: 600px) {
+    padding: 40px 0 0;
+  }
+`;
 
 //--------------------------------//
 //--------------------------------------------------------------------//
@@ -64,7 +80,7 @@ const renderActiveShape = props => {
   const sy = cy + (outerRadius + 10) * sin;
   const mx = cx + (outerRadius + 30) * cos;
   const my = cy + (outerRadius + 30) * sin;
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 1;
   const ey = my;
   const textAnchor = cos >= 0 ? "start" : "end";
 
@@ -91,30 +107,22 @@ const renderActiveShape = props => {
         outerRadius={outerRadius + 10}
         fill={fill}
       />
-      <path
-        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-        stroke={fill}
-        fill="none"
-      />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        textAnchor={textAnchor}
-        fill="#333"
-      >{`Question Average ${value}`}</text>
+      x={20}
+      y={30}
+      >{`Medelvärde ${value}`}</text>
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
+        x={20}
+        y={30}
         dy={18}
-        textAnchor={textAnchor}
-        fill="#999"
+        fill={"#333"}
       >
-        {`(Overall Average ${(percent * 100).toFixed(2)}%)`}
+        {`(Genomsnitt ${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
   );
 };
+
 
 class PieChartClass extends Component {
   constructor(props) {
@@ -138,6 +146,7 @@ class PieChartClass extends Component {
   getCurrentSurveyAnswers = () => {
     this.props.firebase.survey(this.props.currentSurveyId).child("answers").once("value", snapshot => {
       const answersObj = snapshot.val();
+      console.log(answersObj)
       if(answersObj) {
         const surveyAnswers = Object.keys(answersObj).map(key => ({
           ...answersObj[key],
@@ -151,6 +160,8 @@ class PieChartClass extends Component {
   };
 
   filterAnswers = () => {
+    console.log(this.state.sliderOneAnswers, "slider")
+
     const {surveyAnswers} = this.state;
     const answ1 = [];
     const answ2 = [];
@@ -172,24 +183,20 @@ class PieChartClass extends Component {
   render() {
     return (
       <div>
-      {this.props.currentSurveyId ?
         <PieChartCont>
-          <PieChart width={500} height={500}>
+          <PieChart width={400} height={400}>
             <Pie
               activeIndex={this.state.activeIndex}
               activeShape={renderActiveShape}
               data={data1}
-              cx={200}
-              cy={200}
-              innerRadius={60}
-              outerRadius={80}
-              fill="#E1D3C1"
+              innerRadius={90}
+              outerRadius={120}
+              fill="var(--text-color)"
               dataKey="value"
               onMouseEnter={this.onPieEnter}
             />
           </PieChart>
         </PieChartCont>
-        : null}
       </div>
     );
   }

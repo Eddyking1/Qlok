@@ -1,6 +1,37 @@
 import styled from 'styled-components';
 import {SurveyKeyFrame} from '../../styles/Keyframes';
 
+export const ChartPage = styled.div`
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  text-align: center;
+
+  button {
+    padding: 1em;
+    margin: 1.8em 0;
+    border: none;
+    outline: none;
+    background: var(--text-color);
+    color: white;
+    font-size: 1.8em;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.04);
+    }
+    &:disabled {
+      pointer-events: none;
+      background-color: grey;
+    }
+  }
+`;
+
 export const SurveyOutput = styled.div`
   display: flex;
   align-content: center;

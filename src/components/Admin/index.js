@@ -69,14 +69,6 @@ const AdminStyle = styled.div`
   }
 `;
 
-const UserEmail = styled.div `
-/* padding: 20px; */
-font-size:1.4em;
-font-weight:bold;
-background-color:white;
-border:none !important;
-`;
-
 class AdminPage extends Component {
   constructor(props) {
     super(props);
